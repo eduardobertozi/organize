@@ -13,14 +13,14 @@ type PageTemplateProps = {
 	title: string
 	description?: string
 	horizontalLogo?: boolean
-	form: JSX.Element
+	content: JSX.Element
 }
 
 export const PageTemplate: React.FC<PageTemplateProps> = ({
 	title,
 	description,
 	horizontalLogo = false,
-	form,
+	content,
 }) => {
 	return (
 		<div className="flex min-h-screen w-full items-center justify-center px-6 py-2">
@@ -33,10 +33,10 @@ export const PageTemplate: React.FC<PageTemplateProps> = ({
 					{horizontalLogo && (
 						<LogoHorizontal className="mx-auto mb-8 w-full sm:w-40" />
 					)}
-					<CardTitle>{title}</CardTitle>
+					<CardTitle className="text-2xl">{title}</CardTitle>
 					<CardDescription>{description ?? ''}</CardDescription>
 				</CardHeader>
-				<CardContent>{form}</CardContent>
+				<CardContent>{content}</CardContent>
 			</Card>
 		</div>
 	)

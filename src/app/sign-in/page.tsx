@@ -4,8 +4,8 @@ import { SignInForm } from './form'
 export default function SignInPage() {
 	return (
 		<PageTemplate
+			content={<SignInForm />}
 			description="Entre com seus dados"
-			form={<SignInForm />}
 			horizontalLogo
 			title="Entrar"
 		/>

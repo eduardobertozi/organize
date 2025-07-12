@@ -1,3 +1,5 @@
+import { PageTemplate } from '@/components/templates/page-template'
+
 export default function Dashboard() {
-	return <div>Dashboard</div>
+	return <PageTemplate content={<div />} title="Dasboard" />
 }
