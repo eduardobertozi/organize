@@ -23,6 +23,7 @@ export const LogoHorizontal = ({ className, ...props }: LogoProps) => {
 			{...props}
 			alt="Logo Organize"
 			className={cn('w-32', className)}
+			data-testid="logo-horizontal"
 			height={229}
 			src="/logo-horizontal.svg"
 			width={52}
