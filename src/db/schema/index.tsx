@@ -1,4 +1,4 @@
-import { account, session, user, verification } from './auth-schema'
+import { account, session, user, verification } from './auth'
 
 export const schema = {
 	account,

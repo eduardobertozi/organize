@@ -1,0 +1,62 @@
+'use server'
+
+import { auth } from '@/lib/auth'
+import {
+	type SignInParams,
+	signInParamsSchema,
+} from '@/schemas/sign-in-params.schema'
+
+export async function signIn({ username, password }: SignInParams) {
+	const validParams = signInParamsSchema.safeParse({ username, password })
+
+	if (!validParams.success) {
+		return {
+			data: null,
+			error: validParams.error.message,
+		}
+	}
+
+	try {
+		const response = await auth.api.signInEmail({
+			body: {
+				email: username,
+				password,
+			},
+			asResponse: true,
+		})
+
+		if (response.status !== 200) {
+			switch (response.status) {
+				case 404:
+					return {
+						data: null,
+						error: 'Usuário não encontrado',
+					}
+				case 401:
+					return {
+						data: null,
+						error: 'Usuário não autorizado',
+					}
+				default:
+					return {
+						data: null,
+						error: 'Erro ao fazer login',
+					}
+			}
+		}
+
+		const data = await response.json()
+
+		return {
+			data,
+			error: null,
+		}
+	} catch (err) {
+		console.log(err, 'ERRO AO LOGAR')
+
+		return {
+			data: null,
+			error: 'Erro ao fazer login',
+		}
+	}
+}
