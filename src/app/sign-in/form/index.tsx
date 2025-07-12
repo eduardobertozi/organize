@@ -34,6 +34,9 @@ export const SignInForm = () => {
 		resolver: zodResolver(signInParamsSchema),
 	})
 
+	const formWithError =
+		form.formState.errors.username || form.formState.errors.password
+
 	function handleSubmit(data: SignInParams) {
 		startTransition(async () => {
 			const { error } = await signIn(data)
@@ -49,7 +52,11 @@ export const SignInForm = () => {
 
 	return (
 		<Form {...form}>
-			<form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
+			<form
+				className="space-y-4"
+				data-testid="sign-in-form"
+				onSubmit={form.handleSubmit(handleSubmit)}
+			>
 				<FormField
 					control={form.control}
 					name="username"
@@ -82,9 +89,7 @@ export const SignInForm = () => {
 					)}
 				</Button>
 				<p className="text-destructive text-sm">
-					{form.formState.errors.username &&
-						form.formState.errors.password &&
-						'Usuário ou senha inválidos'}
+					{formWithError && 'Usuário ou senha inválidos'}
 				</p>
 			</form>
 		</Form>
