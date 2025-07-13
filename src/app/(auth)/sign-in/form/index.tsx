@@ -2,11 +2,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoaderCircleIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { signUp } from '@/actions/auth/sign-up-email-and-password'
-import InputPassword from '@/components/input-password'
+import { signIn } from '@/actions/auth/sign-in-email-and-password'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -14,65 +14,58 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import InputPassword from '@/components/ui/input-password'
 import {
-	type SignUpParams,
-	signUpParamsSchema,
-} from '@/schemas/sign-up-params.schema'
+	type SignInParams,
+	signInParamsSchema,
+} from '@/schemas/sign-in-params.schema'
 
-export const SignUpForm = () => {
+export const SignInForm = () => {
+	const { replace } = useRouter()
 	const [loading, startTransition] = useTransition()
 
-	const form = useForm<SignUpParams>({
+	const form = useForm<SignInParams>({
 		defaultValues: {
-			email: '',
+			username: '',
 			password: '',
-			name: '',
 		},
-		resolver: zodResolver(signUpParamsSchema),
+		resolver: zodResolver(signInParamsSchema),
 	})
 
-	function handleSubmit(data: SignUpParams) {
+	const formWithError =
+		form.formState.errors.username || form.formState.errors.password
+
+	function handleSubmit(data: SignInParams) {
 		startTransition(async () => {
-			const { error } = await signUp(data)
+			const { error } = await signIn(data)
 
 			if (error) {
-				toast.error('Não foi possível criar sua conta')
+				toast.error(error)
 				return
 			}
 
-			toast.success('Conta criada com sucesso!')
+			replace('/dashboard')
 		})
 	}
 
 	return (
 		<Form {...form}>
-			<form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
+			<form
+				className="space-y-4"
+				data-testid="sign-in-form"
+				onSubmit={form.handleSubmit(handleSubmit)}
+			>
 				<FormField
 					control={form.control}
-					name="name"
+					name="username"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Nome Completo</FormLabel>
+							<FormLabel>Usuário</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="email"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Seu e-mail</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -81,17 +74,23 @@ export const SignUpForm = () => {
 					name="password"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Sua Senha</FormLabel>
+							<FormLabel>Senha</FormLabel>
 							<FormControl>
 								<InputPassword className="w-full" {...field} />
 							</FormControl>
-							<FormMessage />
 						</FormItem>
 					)}
 				/>
 				<Button className="w-full bg-indigo-900 text-foreground" type="submit">
-					{loading ? <LoaderCircleIcon size={24} /> : 'Entrar'}
+					{loading ? (
+						<LoaderCircleIcon className="animate-spin" size={24} />
+					) : (
+						'Entrar'
+					)}
 				</Button>
+				<p className="text-destructive text-sm">
+					{formWithError && 'Usuário ou senha inválidos'}
+				</p>
 			</form>
 		</Form>
 	)

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import type { JSX } from 'react'
 import { getUser } from '@/actions/auth/get-user'
-import { Header } from '../hedaer'
+import { Header } from '../header'
 import { LogoHorizontal } from '../logo'
 import {
 	Card,

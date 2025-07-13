@@ -1,9 +1,24 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-type OptionProps = React.ComponentProps<typeof Button>
+type OptionProps = React.ComponentProps<typeof Button> & {
+	href?: string
+}
 
-export const Option: React.FC<OptionProps> = ({ className, ...props }) => {
+export const Option: React.FC<OptionProps> = ({
+	className,
+	href = '/',
+	...props
+}) => {
+	const { replace } = useRouter()
+
+	function handleClick() {
+		replace(href)
+	}
+
 	return (
 		<Button
 			{...props}
@@ -11,6 +26,7 @@ export const Option: React.FC<OptionProps> = ({ className, ...props }) => {
 				'h-10 w-full cursor-pointer bg-indigo-800 text-white transition hover:bg-indigo-700',
 				className
 			)}
+			onClick={handleClick}
 		/>
 	)
 }
@@ -29,10 +45,12 @@ export const Status = () => {
 				</div>
 			</div>
 			<div className="flex flex-col gap-4">
-				<Option>Fornecedores</Option>
-				<Option>Produtos</Option>
-				<Option>Serviços</Option>
-				<Option className="bg-teal-800 hover:bg-teal-700">Vendas</Option>
+				<Option href="/suppliers">Fornecedores</Option>
+				<Option href="/products">Produtos</Option>
+				<Option href="/services">Serviços</Option>
+				<Option className="bg-teal-800 hover:bg-teal-700" href="/sales">
+					Vendas
+				</Option>
 			</div>
 		</div>
 	)
