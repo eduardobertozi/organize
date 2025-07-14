@@ -5,7 +5,6 @@ import { LoaderCircleIcon } from 'lucide-react'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { signUp } from '@/actions/auth/sign-up-email-and-password'
 import { Button } from '@/components/ui/button'
 import InputPassword from '@/components/ui/extensions/input-password'
 import {
@@ -17,6 +16,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { signUp } from '@/http/actions/auth/sign-up-email-and-password'
 import {
 	type SignUpParams,
 	signUpParamsSchema,

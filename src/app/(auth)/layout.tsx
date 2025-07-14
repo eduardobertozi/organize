@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { getUser } from '@/actions/auth/get-user'
+import { getUser } from '@/http/actions/auth/get-user'
 
 export default async function AuthLayout({
 	children,
@@ -9,7 +9,7 @@ export default async function AuthLayout({
 	const session = await getUser()
 
 	if (session) {
-		return redirect('/dashboard')
+		return redirect('/')
 	}
 
 	return children

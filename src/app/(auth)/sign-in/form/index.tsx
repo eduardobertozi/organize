@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { signIn } from '@/actions/auth/sign-in-email-and-password'
 import { Button } from '@/components/ui/button'
 import InputPassword from '@/components/ui/extensions/input-password'
 import {
@@ -17,6 +16,7 @@ import {
 	FormLabel,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { signIn } from '@/http/actions/auth/sign-in-email-and-password'
 import {
 	type SignInParams,
 	signInParamsSchema,

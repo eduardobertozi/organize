@@ -1,11 +1,13 @@
+import { redirect } from 'next/navigation'
 import { PageTemplate } from '@/components/templates/page-template'
-import { Status } from './_routes/dashboard'
-import { Products } from './_routes/products/products'
-import { Sales } from './_routes/sales/sales'
-import { Servants } from './_routes/servants/servants'
+import { getUser } from '@/http/actions/auth/get-user'
+import { Main } from './routes/main'
+import { Products } from './routes/products'
+import { Sales } from './routes/sales'
+import { Servants } from './routes/servants'
 
 const component = {
-	dashboard: <PageTemplate content={<Status />} title="Bem vindo de volta" />,
+	dashboard: <PageTemplate content={<Main />} title="Bem vindo de volta" />,
 	sales: <PageTemplate content={<Sales />} title="Vendas" />,
 	servants: <PageTemplate content={<Servants />} title="Serviços" />,
 	products: <PageTemplate content={<Products />} title="Produtos" />,
@@ -20,8 +22,14 @@ type DashboardProps = {
 export default async function Dashboard({ params }: DashboardProps) {
 	const { slug } = await params
 
+	const user = await getUser()
+
+	if (!user) {
+		return redirect('/sign-in')
+	}
+
 	if (!slug) {
-		return <PageTemplate content={<Status />} title="Bem vindo de volta" />
+		return <PageTemplate content={<Main />} title="Bem vindo de volta" />
 	}
 
 	return component[slug as keyof typeof component]

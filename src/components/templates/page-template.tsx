@@ -1,6 +1,4 @@
-import { redirect } from 'next/navigation'
 import type { JSX } from 'react'
-import { getUser } from '@/actions/auth/get-user'
 import { Header } from '../header'
 import { LogoHorizontal } from '../logo'
 import {
@@ -18,18 +16,12 @@ type PageTemplateProps = {
 	content: JSX.Element
 }
 
-export const PageTemplate: React.FC<PageTemplateProps> = async ({
+export const PageTemplate: React.FC<PageTemplateProps> = ({
 	title,
 	description,
 	horizontalLogo = false,
 	content,
 }) => {
-	const user = await getUser()
-
-	if (!user) {
-		return redirect('/sign-in')
-	}
-
 	return (
 		<div className="flex min-h-[100svh] w-full items-center justify-center px-6 py-2">
 			<Header isLogged />
