@@ -9,7 +9,7 @@ type HeaderProps = {
 
 export const Header: React.FC<HeaderProps> = ({ isLogged = false }) => {
 	return (
-		<header className="fixed top-0 z-10 flex w-full items-center justify-between bg-background/80 px-6 py-2 backdrop-blur-md md:max-w-sm md:px-0">
+		<header className="fixed top-0 z-10 flex w-full items-center justify-between border-b bg-background/80 px-6 py-2 backdrop-blur-md">
 			{isLogged && (
 				<Avatar>
 					{/* <AvatarImage src="./avatar-80-07.jpg" alt="Kelly King" /> */}
