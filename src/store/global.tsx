@@ -3,13 +3,14 @@ import { create } from 'zustand'
 type GlobalStore = {
 	search: string
 	setSearch: (search: string) => void
-	isOpenSheet: boolean
-	setIsOpenSheet: (isOpen: boolean) => void
+	isOpenSheet: Record<string, boolean>
+	setIsOpenSheet: (id: string, isOpen: boolean) => void
 }
 
 export const useGlobalStore = create<GlobalStore>((set) => ({
 	search: '',
 	setSearch: (search: string) => set({ search }),
-	isOpenSheet: false,
-	setIsOpenSheet: (isOpen: boolean) => set({ isOpenSheet: isOpen }),
+	isOpenSheet: {},
+	setIsOpenSheet: (id, isOpen) =>
+		set((state) => ({ isOpenSheet: { ...state.isOpenSheet, [id]: isOpen } })),
 }))

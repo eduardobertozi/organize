@@ -21,6 +21,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useCreateServants } from '@/hooks/useCreateServants'
 import { useFetchClients } from '@/hooks/useFetchClients'
 import { useFetchServants } from '@/hooks/useFetchServants'
+import type { Sale } from '@/types/sale'
 
 const formAddSaleSchema = z.object({
 	servantId: z.array(z.uuid()).min(1, 'Adicione pelo menos um serviço'),
@@ -34,15 +35,19 @@ const formAddSaleSchema = z.object({
 
 export type FormAddSaleData = z.infer<typeof formAddSaleSchema>
 
-export const FormAddSale = () => {
+type FormAddSaleProps = {
+	sale?: Sale | null
+}
+
+export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 	const form = useForm<FormAddSaleData>({
 		resolver: zodResolver(formAddSaleSchema),
 		defaultValues: {
-			amount: 0,
-			date: new Date(),
-			status: 'pending',
-			cliendId: '',
-			servantId: [],
+			amount: sale?.amount ?? 0,
+			date: sale?.date ?? new Date(),
+			status: sale?.status ?? 'pending',
+			cliendId: sale?.cliendId ?? '',
+			servantId: sale?.servantId ?? [],
 		},
 	})
 

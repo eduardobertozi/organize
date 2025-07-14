@@ -1,5 +1,6 @@
 'use client'
 
+import { useId } from 'react'
 import { useGlobalStore } from '@/store/global'
 import {
 	Sheet,
@@ -13,10 +14,16 @@ import {
 } from '../sheet'
 
 const Root = ({ children }: { children: React.ReactNode }) => {
-	const { isOpenSheet, setIsOpenSheet } = useGlobalStore((state) => state)
+	const id = useId()
+	const isOpenSheet = useGlobalStore((state) => state.isOpenSheet[id] || false)
+	const setIsOpenSheet = useGlobalStore((state) => state.setIsOpenSheet)
+
+	function handleOpenChange(open: boolean) {
+		setIsOpenSheet(id, open)
+	}
 
 	return (
-		<Sheet onOpenChange={setIsOpenSheet} open={isOpenSheet}>
+		<Sheet onOpenChange={handleOpenChange} open={isOpenSheet}>
 			{children}
 		</Sheet>
 	)
