@@ -36,11 +36,11 @@ function setBadgeDetails(status: string) {
 export const SaleItem: React.FC<SaleItemProps> = ({ sale }) => {
 	const saleObject = {
 		id: sale.id,
+		clientId: uuid(),
+		servantId: [uuid()],
 		amount: sale.amount,
 		date: sale.date,
 		status: sale.status,
-		cliendId: uuid(),
-		servantId: [uuid()],
 	}
 
 	const { background, label } = setBadgeDetails(sale.status)
