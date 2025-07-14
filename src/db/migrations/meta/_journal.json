@@ -8,6 +8,62 @@
       "when": 1752258300943,
       "tag": "0000_sudden_tombstone",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752528464061,
+      "tag": "0001_create_client",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752528555349,
+      "tag": "0002_create_supplier",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1752528657905,
+      "tag": "0003_create_store",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752528761247,
+      "tag": "0004_create_product",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752528841854,
+      "tag": "0005_create_servant",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1752528986579,
+      "tag": "0006_create_servant_products",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1752529053227,
+      "tag": "0007_create_sale_servants",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1752529240572,
+      "tag": "0008_create_sale_servants_relation",
+      "breakpoints": true
     }
   ]
 }
