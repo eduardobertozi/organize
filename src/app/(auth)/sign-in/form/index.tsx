@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import z from 'zod'
 import { Button } from '@/components/ui/button'
 import InputPassword from '@/components/ui/extensions/input-password'
 import {
@@ -18,13 +17,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signIn } from '@/http/actions/auth/sign-in-email-and-password'
-
-export const signInParamsSchema = z.object({
-	username: z.email(),
-	password: z.string().min(8),
-})
-
-export type SignInParams = z.infer<typeof signInParamsSchema>
+import { type SignInParams, signInParamsSchema } from './schema'
 
 export const SignInForm = () => {
 	const { replace } = useRouter()

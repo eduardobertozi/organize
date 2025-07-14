@@ -5,7 +5,6 @@ import { LoaderCircleIcon } from 'lucide-react'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import InputPassword from '@/components/ui/extensions/input-password'
 import {
@@ -18,16 +17,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signUp } from '@/http/actions/auth/sign-up-email-and-password'
-
-export const signUpParamsSchema = z.object({
-	email: z.email('E-mail inválido'),
-	password: z.string('Defina uma senha').min(8, 'Senha muito curta'),
-	name: z
-		.string('Preencha seu nome')
-		.min(3, 'O nome precisa ter pelo menos 3 caracteres'),
-})
-
-export type SignUpParams = z.infer<typeof signUpParamsSchema>
+import { type SignUpParams, signUpParamsSchema } from './schema'
 
 export const SignUpForm = () => {
 	const [loading, startTransition] = useTransition()
@@ -77,7 +67,10 @@ export const SignUpForm = () => {
 						<FormItem>
 							<FormLabel>Seu e-mail</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input
+									className="focus:bg-background active:bg-background"
+									{...field}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -96,8 +89,15 @@ export const SignUpForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button className="w-full bg-indigo-900 text-foreground" type="submit">
-					{loading ? <LoaderCircleIcon size={24} /> : 'Entrar'}
+				<Button
+					className="w-full bg-indigo-900 text-foreground hover:bg-indigo-800"
+					type="submit"
+				>
+					{loading ? (
+						<LoaderCircleIcon className="animate-spin" size={24} />
+					) : (
+						'Entrar'
+					)}
 				</Button>
 			</form>
 		</Form>
