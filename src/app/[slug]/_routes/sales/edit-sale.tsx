@@ -37,7 +37,7 @@ export const EditSale: React.FC<EditSaleProps> = ({
 		<Sheet>
 			<SheetTrigger asChild>{children}</SheetTrigger>
 			<SheetContent
-				className="h-[100svh] rounded-t-2xl px-6 md:mx-auto md:w-sm"
+				className="h-[100svh] w-full rounded-t-2xl px-6 md:mx-auto md:h-auto md:min-h-3/4 md:w-1/2"
 				side="bottom"
 			>
 				<SheetHeader className="px-0">
