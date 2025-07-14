@@ -1,11 +1,11 @@
-export type SaleStatus = 'pending' | 'completed' | 'canceled' | 'awaiting'
+export type SaleStatus = 'pending' | 'completed' | 'cancelled' | 'awaiting'
 
 export type Sale = {
 	id: string
 	amount: number
 	date: Date
 	status: SaleStatus
-	cliendId: string
+	clientId: string
 	servantId: string[]
 }
 

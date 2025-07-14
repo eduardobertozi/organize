@@ -1,7 +1,10 @@
+'use client'
+
 import { TrashIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
 	Sheet,
+	SheetClose,
 	SheetContent,
 	SheetHeader,
 	SheetTitle,
@@ -39,15 +42,17 @@ export const EditSale: React.FC<EditSaleProps> = ({
 			>
 				<SheetHeader className="px-0">
 					<SheetTitle>Editar Venda</SheetTitle>
-					<Button
-						className="text-destructive/50 hover:text-destructive"
-						disabled={deleteSale.isPending}
-						onClick={handleDeleteSale}
-						type="button"
-						variant="outline"
-					>
-						Excluir Venda <TrashIcon size={16} />
-					</Button>
+					<SheetClose asChild>
+						<Button
+							className="text-destructive/50 hover:text-destructive"
+							disabled={deleteSale.isPending}
+							onClick={handleDeleteSale}
+							type="button"
+							variant="outline"
+						>
+							Excluir Venda <TrashIcon size={16} />
+						</Button>
+					</SheetClose>
 				</SheetHeader>
 				<div className="space-y-4">
 					<FormAddSale sale={sale} />

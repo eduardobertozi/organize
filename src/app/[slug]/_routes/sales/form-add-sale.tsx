@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon, DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { DateSelector } from '@/components/ui/extensions/date-selector'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
@@ -18,13 +17,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useCreateSale } from '@/hooks/useCreateSale'
 import { useFetchClients } from '@/hooks/useFetchClients'
@@ -34,12 +26,10 @@ import { StatusField } from './status-field'
 
 const formAddSaleSchema = z.object({
 	servantId: z.array(z.uuid()).min(1, 'Adicione pelo menos um serviço'),
-	cliendId: z.string().min(1, 'Selecione um cliente'),
+	clientId: z.uuid().min(1, 'Selecione um cliente'),
 	date: z.date().min(new Date(), 'Adicione uma data válida'),
-	amount: z.coerce.number().min(1, 'Defina um valor para a venda'),
-	status: z
-		.enum(['pending', 'completed', 'canceled', 'awaiting'])
-		.default('pending'),
+	amount: z.number().min(1, 'Defina um valor para a venda'),
+	status: z.enum(['pending', 'completed', 'cancelled', 'awaiting']),
 })
 
 export type FormAddSaleData = z.infer<typeof formAddSaleSchema>
@@ -50,15 +40,17 @@ type FormAddSaleProps = {
 
 export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 	const form = useForm<FormAddSaleData>({
-		resolver: zodResolver(formAddSaleSchema),
 		defaultValues: {
-			amount: sale?.amount ?? 0,
-			date: sale?.date ?? new Date(),
-			status: sale?.status ?? 'pending',
-			cliendId: sale?.cliendId ?? '',
-			servantId: sale?.servantId ?? [],
+			amount: sale?.amount || 0,
+			clientId: sale?.clientId || '',
+			servantId: sale?.servantId || [],
+			date: sale?.date || new Date(),
+			status: sale?.status || 'pending',
 		},
+		resolver: zodResolver(formAddSaleSchema),
 	})
+
+	const isVisible = sale !== null
 
 	const clients = useFetchClients()
 	const servants = useFetchServants()
@@ -68,11 +60,11 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 		<Form {...form}>
 			<form
 				className="space-y-4"
-				onSubmit={form.handleSubmit(addSale.mutateAsync)}
+				onSubmit={form.handleSubmit((data) => addSale.mutateAsync(data))}
 			>
 				<FormField
 					control={form.control}
-					name="cliendId"
+					name="clientId"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Cliente</FormLabel>
@@ -134,6 +126,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 								<InputIcon
 									{...field}
 									icon={DollarSignIcon}
+									onChange={(e) => field.onChange(+e.target.value)}
 									side="left"
 									step="1"
 									type="number"
@@ -143,7 +136,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 						</FormItem>
 					)}
 				/>
-				<StatusField form={form} isVisible={sale !== null} />
+				<StatusField form={form} isVisible={isVisible} />
 				<Button
 					className="mt-2 w-full bg-indigo-900 text-white transition hover:bg-indigo-800"
 					disabled={addSale.isSuccess || addSale.isPending}
