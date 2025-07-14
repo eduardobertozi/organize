@@ -1,6 +1,6 @@
 import { PageTemplate } from '@/components/templates/page-template'
 import { Status } from './_routes/dashboard'
-import { Sales } from './_routes/sales'
+import { Sales } from './_routes/sales/sales'
 
 const component = {
 	dashboard: <PageTemplate content={<Status />} title="Bem vindo de volta" />,

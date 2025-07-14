@@ -9,6 +9,7 @@ import { InputIcon } from '@/components/ui/input-icon'
 import { Paginate } from '@/components/ui/paginate'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
+import { AddSale } from './add-sale'
 
 const sales = [
 	{
@@ -83,9 +84,7 @@ export const Sales: React.FC<unknown> = () => {
 	return (
 		<div className="space-y-2">
 			<InputIcon className="h-11" icon={SearchIcon} placeholder="Pesquisar" />
-			<Button className="h-11 w-full bg-indigo-900 text-white hover:bg-indigo-800">
-				Nova
-			</Button>
+			<AddSale />
 			<div className="pt-4">
 				{isPending ? (
 					<div>
@@ -106,10 +105,10 @@ export const Sales: React.FC<unknown> = () => {
 										className="flex w-full items-center justify-between"
 										key={sale.id}
 									>
-										<div className="flex w-full cursor-pointer items-center justify-between gap-2 border-b bg-accent/20 p-4 text-sm transition duration-300 ease-in-out hover:bg-accent/50">
+										<div className="flex w-full cursor-pointer items-center justify-between gap-2 border-b bg-accent/20 px-2 py-4 text-xs transition duration-300 ease-in-out hover:bg-accent/50">
 											<span className="truncate">{sale.name}</span>
 
-											<div className="flex items-center gap-4">
+											<div className="flex items-center gap-2">
 												<span>{sale.date}</span>
 												<Badge
 													className={cn(

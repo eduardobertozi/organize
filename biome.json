@@ -6,7 +6,11 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/components/ui/**"
+    ]
   },
   "formatter": {
     "enabled": true,

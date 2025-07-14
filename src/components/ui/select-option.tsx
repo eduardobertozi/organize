@@ -3,7 +3,7 @@
 
 import { CheckIcon, ChevronDownIcon } from 'lucide-react'
 import type React from 'react'
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
 	Command,
@@ -20,33 +20,42 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
+type Items = Array<{
+	value: string
+	label: string
+}>
+
 type SelectOptionProps = {
-	items: {
-		value: string
-		label: string
-	}[]
+	items?: Items
+	onChangeValue: (value: string) => void
 }
 
-export const SelectOption: React.FC<SelectOptionProps> = ({ items }) => {
+export const SelectOption: React.FC<SelectOptionProps> = ({
+	items,
+	onChangeValue,
+}) => {
 	const id = useId()
 	const [open, setOpen] = useState<boolean>(false)
 	const [value, setValue] = useState<string>('')
 
+	useEffect(() => {
+		onChangeValue(value)
+	}, [value, onChangeValue])
+
 	return (
-		<div className="*:not-first:mt-2">
+		<div>
 			<Popover onOpenChange={setOpen} open={open}>
 				<PopoverTrigger asChild>
 					<Button
 						aria-expanded={open}
-						className="w-full justify-between border-input bg-background px-3 font-normal outline-none outline-offset-0 hover:bg-background focus-visible:outline-[3px]"
+						className="w-full justify-between border border-input bg-background px-3 font-normal text-foreground outline-none outline-offset-0 hover:bg-background focus-visible:outline-[3px]"
 						id={id}
 						role="combobox"
 						type="button"
-						variant="outline"
 					>
 						<span className={cn('truncate', !value && 'text-muted-foreground')}>
 							{value
-								? items.find((item) => item.value === value)?.label
+								? items?.find((item) => item.value === value)?.label
 								: 'Selecionar'}
 						</span>
 						<ChevronDownIcon
@@ -60,12 +69,12 @@ export const SelectOption: React.FC<SelectOptionProps> = ({ items }) => {
 					align="start"
 					className="w-full min-w-[var(--radix-popper-anchor-width)] border-input p-0"
 				>
-					<Command>
-						<CommandInput placeholder="Search framework..." />
+					<Command className="bg-background">
+						<CommandInput placeholder="Buscar..." />
 						<CommandList>
 							<CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 							<CommandGroup>
-								{items.map((item) => (
+								{items?.map((item) => (
 									<CommandItem
 										key={item.value}
 										onSelect={(currentValue) => {
