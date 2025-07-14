@@ -5,21 +5,21 @@ import { toast } from 'sonner'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
 import { Paginate } from '@/components/ui/paginate'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { useFetchSales } from '@/hooks/sales/use-fetch-sales'
-import { AddSale } from './add-sale'
-import { SaleItem } from './sale-item'
+import { useFetchServants } from '@/hooks/servants/use-fetch-servants'
+import { AddServant } from './add-servant'
+import { ServantItem } from './servant-item'
 
-export const Sales: React.FC<unknown> = () => {
-	const { data, error, isPending } = useFetchSales()
+export const Servants: React.FC<unknown> = () => {
+	const { data, error, isPending } = useFetchServants()
 
 	if (error) {
-		toast.error('Erro ao buscar vendas')
+		toast.error('Erro ao buscar serviços')
 	}
 
 	return (
 		<div className="space-y-2">
 			<InputIcon className="h-11" icon={SearchIcon} placeholder="Pesquisar" />
-			<AddSale />
+			<AddServant />
 
 			<div className="pt-4">
 				{isPending ? (
@@ -36,12 +36,12 @@ export const Sales: React.FC<unknown> = () => {
 						<Paginate currentPage={1} totalPages={1} />
 						<div className="grid grid-cols-1 gap-2">
 							<ScrollArea className="max-h-[300px]">
-								{data?.map((sale) => (
-									<SaleItem key={sale.id} sale={sale} />
+								{data?.map((servant) => (
+									<ServantItem key={servant.id} servant={servant} />
 								))}
 							</ScrollArea>
 						</div>
-						<p>Listando {data?.length} vendas</p>
+						<p>Listando {data?.length} serviços</p>
 					</div>
 				)}
 			</div>

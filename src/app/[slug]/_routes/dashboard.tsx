@@ -47,7 +47,7 @@ export const Status = () => {
 			<div className="flex flex-col gap-4">
 				<Option href="/suppliers">Fornecedores</Option>
 				<Option href="/products">Produtos</Option>
-				<Option href="/services">Serviços</Option>
+				<Option href="/servants">Serviços</Option>
 				<Option className="bg-teal-800 hover:bg-teal-700" href="/sales">
 					Vendas
 				</Option>

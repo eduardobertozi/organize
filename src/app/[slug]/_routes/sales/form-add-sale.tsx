@@ -18,9 +18,9 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useCreateSale } from '@/hooks/useCreateSale'
-import { useFetchClients } from '@/hooks/useFetchClients'
-import { useFetchServants } from '@/hooks/useFetchServants'
+import { useFetchClients } from '@/hooks/clients/use-fetch-clients'
+import { useAddSale } from '@/hooks/sales/use-add-sale'
+import { useFetchServantsOptions } from '@/hooks/servants/use-fetch-servants'
 import type { Sale } from '@/types/sale'
 import { StatusField } from './status-field'
 
@@ -53,8 +53,8 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 	const isVisible = sale !== null
 
 	const clients = useFetchClients()
-	const servants = useFetchServants()
-	const addSale = useCreateSale()
+	const servants = useFetchServantsOptions()
+	const addSale = useAddSale()
 
 	return (
 		<Form {...form}>

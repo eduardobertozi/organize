@@ -21,7 +21,7 @@ const salesList: SaleDetails[] = [
 		id: uuid(),
 		name: 'John Doe - Corte e Barba',
 		date: new Date('2025-07-15'),
-		status: 'canceled',
+		status: 'cancelled',
 		amount: 100,
 	},
 	{
