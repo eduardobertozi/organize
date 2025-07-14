@@ -1,7 +1,6 @@
 'use client'
 
-import { useId } from 'react'
-import { useGlobalStore } from '@/store/global'
+import { createContext, useContext, useState } from 'react'
 import {
 	Sheet,
 	SheetClose,
@@ -13,19 +12,55 @@ import {
 	SheetTrigger,
 } from '../sheet'
 
-const Root = ({ children }: { children: React.ReactNode }) => {
-	const id = useId()
-	const isOpenSheet = useGlobalStore((state) => state.isOpenSheet[id] || false)
-	const setIsOpenSheet = useGlobalStore((state) => state.setIsOpenSheet)
+type TSheetContext = {
+	isOpen: boolean
+	handleChangeOpen: (open: boolean) => void
+}
 
-	function handleOpenChange(open: boolean) {
-		setIsOpenSheet(id, open)
+const SheetContext = createContext<TSheetContext>({} as TSheetContext)
+
+const SheetProvider = ({ children }: { children: React.ReactNode }) => {
+	const [isOpen, setIsOpen] = useState<boolean>(false)
+
+	function handleChangeOpen(open: boolean) {
+		console.log('handleChangeOpen', open)
+		setIsOpen(open)
 	}
 
 	return (
-		<Sheet onOpenChange={handleOpenChange} open={isOpenSheet}>
+		<SheetContext.Provider value={{ isOpen, handleChangeOpen }}>
 			{children}
-		</Sheet>
+		</SheetContext.Provider>
+	)
+}
+
+export const useSheetContext = () => {
+	const context = useContext(SheetContext)
+
+	if (!context) {
+		throw new Error('useSheetContext must be used within a SheetProvider')
+	}
+
+	return context
+}
+
+const SheetClosableRoot = ({ children }: { children: React.ReactNode }) => {
+	const { isOpen, handleChangeOpen } = useSheetContext()
+
+	return (
+		<SheetProvider>
+			<Sheet onOpenChange={handleChangeOpen} open={isOpen}>
+				{children}
+			</Sheet>
+		</SheetProvider>
+	)
+}
+
+const Root = ({ children }: { children: React.ReactNode }) => {
+	return (
+		<SheetProvider>
+			<SheetClosableRoot>{children}</SheetClosableRoot>
+		</SheetProvider>
 	)
 }
 
@@ -39,3 +74,7 @@ export const SheetClosable = {
 	Footer: SheetFooter,
 	Close: SheetClose,
 }
+
+/* TODO:
+  - [ ] Corrigir o bug do sheet não fechar quando o componente é desmontado
+*/

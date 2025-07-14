@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { DollarSignIcon } from 'lucide-react'
+import { CheckIcon, DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
@@ -18,7 +18,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useCreateServants } from '@/hooks/useCreateServants'
+import { useCreateSale } from '@/hooks/useCreateSale'
 import { useFetchClients } from '@/hooks/useFetchClients'
 import { useFetchServants } from '@/hooks/useFetchServants'
 import type { Sale } from '@/types/sale'
@@ -53,7 +53,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 
 	const clients = useFetchClients()
 	const servants = useFetchServants()
-	const addSale = useCreateServants()
+	const addSale = useCreateSale()
 
 	return (
 		<Form {...form}>
@@ -136,9 +136,16 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 				/>
 				<Button
 					className="mt-2 w-full bg-indigo-900 text-white transition hover:bg-indigo-800"
+					disabled={addSale.isSuccess || addSale.isPending}
 					type="submit"
 				>
-					Salvar
+					{addSale.isSuccess ? (
+						<span className="flex items-center">
+							Salvo com sucesso <CheckIcon className="ml-2 h-4 w-4" />
+						</span>
+					) : (
+						<span>{addSale.isPending ? 'Salvando...' : 'Salvar'}</span>
+					)}
 				</Button>
 			</form>
 		</Form>

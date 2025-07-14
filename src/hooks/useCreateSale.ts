@@ -1,10 +1,11 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import type { FormAddSaleData } from '@/app/[slug]/_routes/sales/form-add-sale'
-import { useGlobalStore } from '@/store/global'
+import { useSheetContext } from '@/components/ui/extensions/sheet-closable'
 
-export const useCreateServants = () => {
-	const { setIsOpenSheet } = useGlobalStore()
+export const useCreateSale = () => {
+	const queryClient = useQueryClient()
+	const { handleChangeOpen } = useSheetContext()
 
 	const addSale = useMutation({
 		mutationFn: async (data: FormAddSaleData) => {
@@ -14,7 +15,11 @@ export const useCreateServants = () => {
 		onSuccess: (data) => {
 			console.log(data)
 			toast.success('Venda adicionada com sucesso')
-			setIsOpenSheet(false)
+			handleChangeOpen(false)
+
+			queryClient.invalidateQueries({
+				queryKey: ['sales'],
+			})
 		},
 	})
 
