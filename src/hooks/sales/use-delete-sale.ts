@@ -16,7 +16,7 @@ export const useDeleteSale = () => {
 			toggle()
 			toast.success('Venda excluída com sucesso')
 
-			queryClient.invalidateQueries({ queryKey: ['sales'] })
+			queryClient.invalidateQueries({ queryKey: ['sales', 'sales-options'] })
 		},
 	})
 
