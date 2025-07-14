@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon, DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { DateSelector } from '@/components/ui/extensions/date-selector'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
@@ -17,11 +18,19 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useCreateSale } from '@/hooks/useCreateSale'
 import { useFetchClients } from '@/hooks/useFetchClients'
 import { useFetchServants } from '@/hooks/useFetchServants'
 import type { Sale } from '@/types/sale'
+import { StatusField } from './status-field'
 
 const formAddSaleSchema = z.object({
 	servantId: z.array(z.uuid()).min(1, 'Adicione pelo menos um serviço'),
@@ -134,6 +143,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 						</FormItem>
 					)}
 				/>
+				<StatusField form={form} isVisible={sale !== null} />
 				<Button
 					className="mt-2 w-full bg-indigo-900 text-white transition hover:bg-indigo-800"
 					disabled={addSale.isSuccess || addSale.isPending}
