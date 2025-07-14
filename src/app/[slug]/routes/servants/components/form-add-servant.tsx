@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon, DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
 import { MultiSelector } from '@/components/ui/extensions/multi-selector'
@@ -19,15 +18,11 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchProductsOptions } from '@/http/hooks/products/use-fetch-products'
 import { useAddServant } from '@/http/hooks/servants/use-add-servant'
+import {
+	type FormAddServantData,
+	formAddServantSchema,
+} from '@/schemas/add-servant-schema'
 import type { Servant } from '@/types/servant'
-
-const formAddServantSchema = z.object({
-	description: z.string().min(1, 'Defina uma descrição para o serviço'),
-	value: z.number().min(1, 'Defina um valor para o serviço'),
-	products: z.array(z.uuid()),
-})
-
-export type FormAddServantData = z.infer<typeof formAddServantSchema>
 
 type FormAddServantProps = {
 	servant?: Servant | null

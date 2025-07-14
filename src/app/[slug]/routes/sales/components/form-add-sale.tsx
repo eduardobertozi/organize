@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon, DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { DateSelector } from '@/components/ui/extensions/date-selector'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
@@ -21,19 +20,13 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchClients } from '@/http/hooks/clients/use-fetch-clients'
 import { useAddSale } from '@/http/hooks/sales/use-add-sale'
 import { useFetchServantsOptions } from '@/http/hooks/servants/use-fetch-servants'
+import {
+	type FormAddSaleData,
+	formAddSaleSchema,
+} from '@/schemas/add-sale-schema'
 import type { Sale } from '@/types/sale'
 import { AddClient } from '../../clients/components/add-client'
 import { StatusField } from './status-field'
-
-const formAddSaleSchema = z.object({
-	servantId: z.array(z.uuid()).min(1, 'Adicione pelo menos um serviço'),
-	clientId: z.uuid().min(1, 'Selecione um cliente'),
-	date: z.date().min(new Date(), 'Adicione uma data válida'),
-	amount: z.number().min(1, 'Defina um valor para a venda'),
-	status: z.enum(['pending', 'completed', 'cancelled', 'awaiting']),
-})
-
-export type FormAddSaleData = z.infer<typeof formAddSaleSchema>
 
 type FormAddSaleProps = {
 	sale?: Sale | null

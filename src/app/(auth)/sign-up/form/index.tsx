@@ -17,7 +17,10 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signUp } from '@/http/actions/auth/sign-up-email-and-password'
-import { type SignUpParams, signUpParamsSchema } from './schema'
+import {
+	type SignUpParams,
+	signUpParamsSchema,
+} from '../../../../schemas/sign-up-schema'
 
 export const SignUpForm = () => {
 	const [loading, startTransition] = useTransition()

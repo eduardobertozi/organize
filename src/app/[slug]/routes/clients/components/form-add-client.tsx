@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon } from 'lucide-react'
 import { useId } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -16,14 +15,11 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAddClient } from '@/http/hooks/clients/use-add-client'
+import {
+	type FormAddClientData,
+	formAddClientSchema,
+} from '@/schemas/add-client-schema'
 import type { Client } from '@/types/client'
-
-const formAddClientSchema = z.object({
-	name: z.string().min(1, 'Defina o nome do cliente'),
-	whatsapp: z.string().min(1, 'Defina o whatsapp do cliente'),
-})
-
-export type FormAddClientData = z.infer<typeof formAddClientSchema>
 
 type FormAddClientProps = {
 	client?: Client | null

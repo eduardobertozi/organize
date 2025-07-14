@@ -1,10 +1,7 @@
 'use server'
 
-import {
-	type SignUpParams,
-	signUpParamsSchema,
-} from '@/app/(auth)/sign-up/form/schema'
 import { auth } from '@/lib/auth'
+import { type SignUpParams, signUpParamsSchema } from '@/schemas/sign-up-schema'
 
 export async function signUp({ email, password, name }: SignUpParams) {
 	const validParams = signUpParamsSchema.safeParse({ email, password, name })

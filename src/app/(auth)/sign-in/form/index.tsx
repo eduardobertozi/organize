@@ -17,7 +17,10 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signIn } from '@/http/actions/auth/sign-in-email-and-password'
-import { type SignInParams, signInParamsSchema } from './schema'
+import {
+	type SignInParams,
+	signInParamsSchema,
+} from '../../../../schemas/sign-in-schema'
 
 export const SignInForm = () => {
 	const { replace } = useRouter()

@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon, DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
 import {
@@ -16,15 +15,11 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAddProduct } from '@/http/hooks/products/use-add-product'
+import {
+	type FormAddProductData,
+	formAddProductSchema,
+} from '@/schemas/add-product-schema'
 import type { Product } from '@/types/product'
-
-const formAddProductSchema = z.object({
-	description: z.string().min(1, 'Defina uma descrição para o produto'),
-	coast: z.number().min(1, 'Defina um valor para o produto'),
-	quantity: z.number().min(1, 'Defina uma quantidade para o produto'),
-})
-
-export type FormAddProductData = z.infer<typeof formAddProductSchema>
 
 type FormAddProductProps = {
 	product?: Product | null
