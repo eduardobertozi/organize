@@ -1,6 +1,12 @@
 import { TrashIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { SheetClosable } from '@/components/ui/extensions/sheet-closable'
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from '@/components/ui/sheet'
 import { useDeleteSale } from '@/hooks/useDeleteSale'
 import type { Sale } from '@/types/sale'
 import { FormAddSale } from './form-add-sale'
@@ -25,14 +31,14 @@ export const EditSale: React.FC<EditSaleProps> = ({
 	}
 
 	return (
-		<SheetClosable.Root>
-			<SheetClosable.Trigger asChild>{children}</SheetClosable.Trigger>
-			<SheetClosable.Content
+		<Sheet>
+			<SheetTrigger asChild>{children}</SheetTrigger>
+			<SheetContent
 				className="min-h-2/3 rounded-t-2xl px-6 md:mx-auto md:w-sm"
 				side="bottom"
 			>
-				<SheetClosable.Header className="px-0">
-					<SheetClosable.Title>Editar Venda</SheetClosable.Title>
+				<SheetHeader className="px-0">
+					<SheetTitle>Editar Venda</SheetTitle>
 					<Button
 						className="text-destructive/50 hover:text-destructive"
 						disabled={deleteSale.isPending}
@@ -42,11 +48,11 @@ export const EditSale: React.FC<EditSaleProps> = ({
 					>
 						Excluir Venda <TrashIcon size={16} />
 					</Button>
-				</SheetClosable.Header>
+				</SheetHeader>
 				<div className="space-y-4">
 					<FormAddSale sale={sale} />
 				</div>
-			</SheetClosable.Content>
-		</SheetClosable.Root>
+			</SheetContent>
+		</Sheet>
 	)
 }
