@@ -1,5 +1,5 @@
 import { ChevronDownIcon, SearchIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	Dialog,
 	DialogContent,
@@ -14,11 +14,13 @@ import { useGlobalStore } from '@/store/global'
 
 type SelectItemDialogProps = {
 	items: Option[]
+	addNewItemElement?: React.JSX.Element | null
 	onSelect: (value: string) => void
 }
 
 export const SelectItemDialog: React.FC<SelectItemDialogProps> = ({
 	items,
+	addNewItemElement = null,
 	onSelect,
 }) => {
 	const [selected, setSelected] = useState<string | null>(null)
@@ -64,13 +66,14 @@ export const SelectItemDialog: React.FC<SelectItemDialogProps> = ({
 					<DialogTitle>Selecione</DialogTitle>
 				</DialogHeader>
 				<div className="space-y-4">
-					<header className="w-full border-b py-4">
+					<header className="flex items-center gap-2 w-full border-b py-4">
 						<InputIcon
 							icon={SearchIcon}
 							onChange={handleChangeGlobalSearch}
 							placeholder="Pesquisar..."
 							value={search}
 						/>
+						{addNewItemElement}
 					</header>
 					{items.map((item) => (
 						<button

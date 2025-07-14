@@ -22,6 +22,7 @@ import { useFetchClients } from '@/http/hooks/clients/use-fetch-clients'
 import { useAddSale } from '@/http/hooks/sales/use-add-sale'
 import { useFetchServantsOptions } from '@/http/hooks/servants/use-fetch-servants'
 import type { Sale } from '@/types/sale'
+import { AddClient } from '../../clients/components/add-client'
 import { StatusField } from './status-field'
 
 const formAddSaleSchema = z.object({
@@ -70,6 +71,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 							<FormLabel>Cliente</FormLabel>
 							<FormControl>
 								<SelectItemDialog
+									addNewItemElement={<AddClient />}
 									items={clients.data ?? []}
 									onSelect={field.onChange}
 								/>
