@@ -9,12 +9,14 @@ const productsList: Product[] = [
 		id: uuid(),
 		description: 'Lâmina',
 		supplierId: uuid(),
+		quantity: 1000,
 		coast: 0.5,
 	},
 	{
 		id: uuid(),
 		description: 'Gola Higiênica',
 		supplierId: uuid(),
+		quantity: 1000,
 		coast: 1.0,
 	},
 ]

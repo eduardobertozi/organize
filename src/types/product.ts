@@ -2,6 +2,7 @@ export type Product = {
 	id: string
 	description: string
 	supplierId: string
+	quantity: number
 	coast: number
 }
 
