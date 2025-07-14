@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { signUp } from '@/actions/auth/sign-up-email-and-password'
 import { Button } from '@/components/ui/button'
+import InputPassword from '@/components/ui/extensions/input-password'
 import {
 	Form,
 	FormControl,
@@ -16,7 +17,6 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import InputPassword from '@/components/ui/input-password'
 import {
 	type SignUpParams,
 	signUpParamsSchema,

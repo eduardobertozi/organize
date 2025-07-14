@@ -4,9 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { MultiSelector } from '@/components/multi-selector'
 import { Button } from '@/components/ui/button'
-import { DateSelector } from '@/components/ui/date-selector'
+import { DateSelector } from '@/components/ui/extensions/date-selector'
+import { InputIcon } from '@/components/ui/extensions/input-icon'
+import { MultiSelector } from '@/components/ui/extensions/multi-selector'
+import { SelectItemDialog } from '@/components/ui/extensions/select-item-dialog'
 import {
 	Form,
 	FormControl,
@@ -15,19 +17,19 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
-import { InputIcon } from '@/components/ui/input-icon'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useCreateServants } from '@/hooks/useCreateServants'
 import { useFetchClients } from '@/hooks/useFetchClients'
 import { useFetchServants } from '@/hooks/useFetchServants'
-import { SelectClient } from './select-client'
 
 const formAddSaleSchema = z.object({
 	servantId: z.array(z.uuid()).min(1, 'Adicione pelo menos um serviço'),
 	cliendId: z.string().min(1, 'Selecione um cliente'),
 	date: z.date().min(new Date(), 'Adicione uma data válida'),
 	amount: z.coerce.number().min(1, 'Defina um valor para a venda'),
-	status: z.enum(['pending', 'completed', 'canceled', 'awaiting']),
+	status: z
+		.enum(['pending', 'completed', 'canceled', 'awaiting'])
+		.default('pending'),
 })
 
 export type FormAddSaleData = z.infer<typeof formAddSaleSchema>
@@ -44,18 +46,16 @@ export const FormAddSale = () => {
 		},
 	})
 
-	const servants = useFetchServants()
 	const clients = useFetchClients()
+	const servants = useFetchServants()
 	const addSale = useCreateServants()
-
-	async function handleSubmit(data: FormAddSaleData) {
-		const result = await addSale.mutateAsync(data)
-		console.log(result)
-	}
 
 	return (
 		<Form {...form}>
-			<form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
+			<form
+				className="space-y-4"
+				onSubmit={form.handleSubmit(addSale.mutateAsync)}
+			>
 				<FormField
 					control={form.control}
 					name="cliendId"
@@ -63,14 +63,10 @@ export const FormAddSale = () => {
 						<FormItem>
 							<FormLabel>Cliente</FormLabel>
 							<FormControl>
-								{clients.isLoading ? (
-									<Skeleton className="h-10 w-full" />
-								) : (
-									<SelectClient
-										items={clients.data ?? []}
-										onSelect={field.onChange}
-									/>
-								)}
+								<SelectItemDialog
+									items={clients.data ?? []}
+									onSelect={field.onChange}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>

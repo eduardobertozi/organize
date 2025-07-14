@@ -7,17 +7,17 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
+import { InputIcon } from '@/components/ui/extensions/input-icon'
 import { Input } from '@/components/ui/input'
-import { InputIcon } from '@/components/ui/input-icon'
 import type { Option } from '@/components/ui/multiselect'
 import { useGlobalStore } from '@/store/global'
 
-type SelectClientProps = {
+type SelectItemDialogProps = {
 	items: Option[]
 	onSelect: (value: string) => void
 }
 
-export const SelectClient: React.FC<SelectClientProps> = ({
+export const SelectItemDialog: React.FC<SelectItemDialogProps> = ({
 	items,
 	onSelect,
 }) => {

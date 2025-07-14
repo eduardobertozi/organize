@@ -6,11 +6,7 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false,
-    "includes": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/components/ui/**"
-    ]
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,
@@ -20,7 +16,11 @@
     "enabled": true,
     "rules": {
       "recommended": true
-    }
+    },
+    "includes": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/components/ui/**"
+    ]
   },
   "javascript": {
     "formatter": {
