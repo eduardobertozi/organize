@@ -31,12 +31,12 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
 	const form = useForm<FormAddProductData>({
 		defaultValues: {
 			description: product?.description || '',
-			coast: product?.coast || 0,
-			quantity: product?.quantity || 0,
+			coast: product?.coast,
+			quantity: product?.quantity,
 		},
 		resolver: zodResolver(formAddProductSchema),
 	})
-	const addProduct = useAddProduct()
+	const addProduct = useAddProduct(product?.id)
 
 	return (
 		<Form {...form}>
@@ -67,10 +67,8 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
 								<InputIcon
 									{...field}
 									icon={DollarSignIcon}
-									onChange={(e) => field.onChange(+e.target.value)}
 									side="left"
 									step="1"
-									type="number"
 								/>
 							</FormControl>
 							<FormMessage />

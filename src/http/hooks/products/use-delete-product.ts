@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useSheetToggle } from '@/components/ui/sheet'
+import { deleteProduct } from '@/http/actions/products/delete-product'
 
 export const useDeleteProduct = () => {
 	const queryClient = useQueryClient()
 	const { toggle } = useSheetToggle()
 
-	const deleteProduct = useMutation({
+	const response = useMutation({
 		mutationFn: async (productId: string) => {
-			await new Promise((resolve) => setTimeout(resolve, 1000))
-			return productId
+			await deleteProduct(productId)
 		},
 		onSuccess: (productId) => {
 			console.log(`deleting ${productId}`)
@@ -17,10 +17,10 @@ export const useDeleteProduct = () => {
 			toast.success('Produto excluído com sucesso')
 
 			queryClient.invalidateQueries({
-				queryKey: ['products', 'products-options'],
+				queryKey: ['products'],
 			})
 		},
 	})
 
-	return deleteProduct
+	return response
 }

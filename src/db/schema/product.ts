@@ -6,6 +6,6 @@ export const product = pgTable('product', {
 	description: text().notNull(),
 	coast: integer().notNull(),
 	quantity: integer(),
-	updatedAt: timestamp().defaultNow().notNull(),
-	supplierId: uuid().references(() => supplier.id),
+	updatedAt: timestamp('updated_at').defaultNow().notNull(),
+	supplierId: uuid('supplier_id').references(() => supplier.id),
 })

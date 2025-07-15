@@ -6,10 +6,10 @@ import { servant } from './servant'
 export const servantProducts = pgTable(
 	'servant_product',
 	{
-		servantId: uuid()
+		servantId: uuid('servant_id')
 			.notNull()
 			.references(() => servant.id),
-		productId: uuid()
+		productId: uuid('product_id')
 			.notNull()
 			.references(() => product.id),
 	},

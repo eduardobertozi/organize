@@ -16,13 +16,14 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useFetchProductsOptions } from '@/http/hooks/products/use-fetch-products'
+import { useFetchProducts } from '@/http/hooks/products/use-fetch-products'
 import { useAddServant } from '@/http/hooks/servants/use-add-servant'
 import {
 	type FormAddServantData,
 	formAddServantSchema,
 } from '@/schemas/add-servant-schema'
 import type { Servant } from '@/types/servant'
+import { transformToOptions } from '@/utils/data-to-options'
 
 type FormAddServantProps = {
 	servant?: Servant | null
@@ -41,7 +42,13 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 		},
 		resolver: zodResolver(formAddServantSchema),
 	})
-	const products = useFetchProductsOptions()
+	const products = useFetchProducts()
+
+	const productsOptions = transformToOptions(products.data ?? [], {
+		label: 'description',
+		value: 'id',
+	})
+
 	const addServant = useAddServant()
 
 	return (
@@ -75,7 +82,7 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 										<Skeleton className="h-10 w-full" />
 									) : (
 										<MultiSelector
-											items={products.data}
+											items={productsOptions}
 											onChangeValue={field.onChange}
 										/>
 									)}
