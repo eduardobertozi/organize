@@ -7,13 +7,13 @@ import {
 	PaginationLink,
 } from '@/components/ui/pagination'
 import { cn } from '@/lib/utils'
+import { useGlobalStore } from '@/store/global'
 
-type PaginationProps = {
-	currentPage: number
-	totalPages: number
-}
+export const Paginate = () => {
+	const currentPage = useGlobalStore((state) => state.currentPage)
+	const setPage = useGlobalStore((state) => state.setPage)
+	const totalPages = useGlobalStore((state) => state.totalPages)
 
-export const Paginate = ({ currentPage, totalPages }: PaginationProps) => {
 	return (
 		<Pagination>
 			<PaginationContent className="w-full justify-between">
@@ -27,8 +27,8 @@ export const Paginate = ({ currentPage, totalPages }: PaginationProps) => {
 								variant: 'outline',
 							})
 						)}
-						href={currentPage === 1 ? undefined : `#/page/${currentPage - 1}`}
-						role={currentPage === 1 ? 'link' : undefined}
+						onClick={() => setPage(currentPage - 1)}
+						role={currentPage === 1 ? 'button' : undefined}
 					>
 						<ChevronLeftIcon aria-hidden="true" size={16} />
 					</PaginationLink>
@@ -49,12 +49,13 @@ export const Paginate = ({ currentPage, totalPages }: PaginationProps) => {
 								variant: 'outline',
 							})
 						)}
-						href={
-							currentPage === totalPages
-								? undefined
-								: `#/page/${currentPage + 1}`
-						}
-						role={currentPage === totalPages ? 'link' : undefined}
+						// href={
+						// 	currentPage === totalPages
+						// 		? undefined
+						// 		: `#/page/${currentPage + 1}`
+						// }
+						onClick={() => setPage(currentPage + 1)}
+						role={currentPage === totalPages ? 'button' : undefined}
 					>
 						<ChevronRightIcon aria-hidden="true" size={16} />
 					</PaginationLink>

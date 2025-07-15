@@ -19,7 +19,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchClients } from '@/http/hooks/clients/use-fetch-clients'
 import { useAddSale } from '@/http/hooks/sales/use-add-sale'
-import { useFetchServantsOptions } from '@/http/hooks/servants/use-fetch-servants'
+import { useFetchServants } from '@/http/hooks/servants/use-fetch-servants'
 import {
 	type FormAddSaleData,
 	formAddSaleSchema,
@@ -53,7 +53,12 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 		value: 'id',
 	})
 
-	const servants = useFetchServantsOptions()
+	const servants = useFetchServants()
+	const servantsOptions = transformToOptions(servants.data ?? [], {
+		label: 'description',
+		value: 'id',
+	})
+
 	const addSale = useAddSale()
 
 	return (
@@ -91,7 +96,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 										<Skeleton className="h-10 w-full" />
 									) : (
 										<MultiSelector
-											items={servants.data}
+											items={servantsOptions}
 											onChangeValue={field.onChange}
 										/>
 									)}

@@ -15,8 +15,8 @@ export const sales = pgTable('sale', {
 	amount: integer().notNull(),
 	date: timestamp('date').notNull(),
 	status: saleStatus('status').notNull(),
-	clientId: uuid().references(() => clients.id),
-	updatedAt: timestamp().defaultNow().notNull(),
+	clientId: uuid('client_id').references(() => clients.id),
+	updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 export const salesRelations = relations(sales, ({ many }) => ({

@@ -56,7 +56,7 @@ export const useFetchClients = () => {
 		queryKey: ['clients', debouncedSearch],
 		queryFn: () => fetchClients(debouncedSearch),
 		enabled: !!debouncedSearch,
-		// staleTime: 1000 * 60 * 5,
+		staleTime: 1000 * 60 * 1,
 	})
 
 	return clients

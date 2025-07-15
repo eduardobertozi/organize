@@ -1,14 +1,11 @@
 'use server'
 
 import { ilike } from 'drizzle-orm'
-import { z } from 'zod'
 import { db } from '@/db/database'
 import { clients } from '@/db/schema/client'
 import { getUser } from '../auth/get-user'
 
-const searchSchema = z.string().optional().default('')
-
-export async function fetchClients(search: z.infer<typeof searchSchema>) {
+export async function fetchClients(search: string) {
 	const user = await getUser()
 
 	if (!user) {
