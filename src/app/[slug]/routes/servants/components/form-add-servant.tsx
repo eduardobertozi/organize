@@ -28,6 +28,8 @@ type FormAddServantProps = {
 	servant?: Servant | null
 }
 
+/* TODO: Adicionar produtos ao serviço */
+
 export const FormAddServant: React.FC<FormAddServantProps> = ({
 	servant = null,
 }) => {
@@ -35,7 +37,7 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 		defaultValues: {
 			description: servant?.description || '',
 			value: servant?.value || 0,
-			products: servant?.products || [],
+			products: [], //servant?.products || [],
 		},
 		resolver: zodResolver(formAddServantSchema),
 	})
