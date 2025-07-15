@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dialog'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
 import { Input } from '@/components/ui/input'
-import type { Option } from '@/components/ui/multiselect'
+import { type Option } from '@/components/ui/multiselect'
 import { useGlobalStore } from '@/store/global'
 
 type SelectItemDialogProps = {
@@ -25,7 +25,8 @@ export const SelectItemDialog: React.FC<SelectItemDialogProps> = ({
 }) => {
 	const [selected, setSelected] = useState<string | null>(null)
 	const [isOpen, setIsOpen] = useState(false)
-	const { search, setSearch } = useGlobalStore((state) => state)
+	const search = useGlobalStore((state) => state.search)
+	const setSearch = useGlobalStore((state) => state.setSearch)
 
 	function handleChangeGlobalSearch(
 		event: React.ChangeEvent<HTMLInputElement>

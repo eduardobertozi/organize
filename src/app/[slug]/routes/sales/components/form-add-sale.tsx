@@ -25,6 +25,7 @@ import {
 	formAddSaleSchema,
 } from '@/schemas/add-sale-schema'
 import type { Sale } from '@/types/sale'
+import { transformToOptions } from '@/utils/data-to-options'
 import { AddClient } from '../../clients/components/add-client'
 import { StatusField } from './status-field'
 
@@ -47,6 +48,11 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 	const isVisible = sale !== null
 
 	const clients = useFetchClients()
+	const clientsOptions = transformToOptions(clients.data ?? [], {
+		label: 'name',
+		value: 'id',
+	})
+
 	const servants = useFetchServantsOptions()
 	const addSale = useAddSale()
 
@@ -65,7 +71,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 							<FormControl>
 								<SelectItemDialog
 									addNewItemElement={<AddClient />}
-									items={clients.data ?? []}
+									items={clientsOptions}
 									onSelect={field.onChange}
 								/>
 							</FormControl>
