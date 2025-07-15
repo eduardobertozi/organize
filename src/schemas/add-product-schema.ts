@@ -1,8 +1,9 @@
 import { z } from 'zod/v3'
+import { currencySchema } from './currency-schema'
 
 export const formAddProductSchema = z.object({
 	description: z.string().min(1, 'Defina uma descrição para o produto'),
-	coast: z.coerce.number().min(1, 'Defina um valor para o produto'),
+	coast: currencySchema('Defina um valor para o produto'),
 	quantity: z.coerce.number().min(1, 'Defina o estoque do produto'),
 })
 

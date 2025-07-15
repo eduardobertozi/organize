@@ -1,13 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CheckIcon, DollarSignIcon } from 'lucide-react'
+import { CheckIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import { InputIcon } from '@/components/ui/extensions/input-icon'
+import { InputCurrency } from '@/components/ui/extensions/input-currency'
 import {
 	Form,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -31,8 +32,8 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
 	const form = useForm<FormAddProductData>({
 		defaultValues: {
 			description: product?.description || '',
-			coast: product?.coast,
-			quantity: product?.quantity,
+			coast: product ? product.coast / 100 : 0,
+			quantity: product?.quantity || 0,
 		},
 		resolver: zodResolver(formAddProductSchema),
 	})
@@ -64,13 +65,11 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
 						<FormItem>
 							<FormLabel>Valor</FormLabel>
 							<FormControl>
-								<InputIcon
-									{...field}
-									icon={DollarSignIcon}
-									side="left"
-									step="1"
-								/>
+								<InputCurrency type="number" {...field} />
 							</FormControl>
+							<FormDescription>
+								Use 0 e vírgula para separar centavos, por ex: 0,50 = R$ 0,50
+							</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -82,7 +81,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
 						<FormItem>
 							<FormLabel>Quantidade</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input type="number" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

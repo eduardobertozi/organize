@@ -1,5 +1,6 @@
 import { DollarSignIcon } from 'lucide-react'
 import type { Product } from '@/types/product'
+import { currency } from '@/utils/currency'
 import { EditProduct } from './edit-product'
 
 type SaleItemProps = {
@@ -14,7 +15,7 @@ export const ProductItem: React.FC<SaleItemProps> = ({ product }) => {
 					<span className="mt-2 truncate">{product.description}</span>
 					<div className="flex items-center gap-2">
 						<DollarSignIcon className="text-emerald-600" size={18} />
-						<span>R$: {product.coast.toFixed(2)}</span>
+						<span>{currency(product.coast)}</span>
 					</div>
 				</div>
 			</div>
