@@ -16,7 +16,7 @@ export async function deleteServant(id: string) {
 	}
 
 	try {
-		await db.delete(schema.servants).where(eq(schema.servants.id, id))
+		await db.delete(schema.servant).where(eq(schema.servant.id, id))
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao deletar serviço')

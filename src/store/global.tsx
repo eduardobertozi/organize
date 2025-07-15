@@ -13,7 +13,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	search: '',
 	setSearch: (search: string) => set({ search }),
 	currentPage: 1,
-	setPage: (page: number) => set({ page }),
+	setPage: (page: number) => set({ currentPage: page }),
 	totalPages: 1,
 	setTotalPages: (totalPages: number) => set({ totalPages }),
 }))

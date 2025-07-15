@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from '@/db/database'
-import { clients } from '@/db/schema/client'
+import { client } from '@/db/schema/client'
 import {
 	type FormAddClientData,
 	formAddClientSchema,
@@ -22,7 +22,7 @@ export async function createClient(data: FormAddClientData) {
 	}
 
 	try {
-		await db.insert(clients).values(data)
+		await db.insert(client).values(data)
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao criar cliente')

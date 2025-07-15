@@ -3,7 +3,6 @@
 import { SearchIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { InputIcon } from '@/components/ui/extensions/input-icon'
-import { Paginate } from '@/components/ui/paginate'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useFetchServants } from '@/http/hooks/servants/use-fetch-servants'
 import { AddServant } from './components/add-servant'
@@ -33,7 +32,6 @@ export const Servants: React.FC<unknown> = () => {
 					</div>
 				) : (
 					<div className="space-y-8 text-sm">
-						<Paginate currentPage={1} totalPages={1} />
 						<div className="grid grid-cols-1 gap-2">
 							<ScrollArea className="max-h-[300px]">
 								{data?.map((servant) => (

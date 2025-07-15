@@ -2,7 +2,7 @@
 
 import { and, between, count, eq } from 'drizzle-orm'
 import { db } from '@/db/database'
-import { sales } from '@/db/schema/sale'
+import { sale } from '@/db/schema/sale'
 import { dayjs } from '@/lib/dayjs'
 import { getUser } from '../auth/get-user'
 
@@ -20,11 +20,11 @@ export async function getSalesCount() {
 		.select({
 			count: count(),
 		})
-		.from(sales)
+		.from(sale)
 		.where(
 			and(
-				eq(sales.status, 'completed'),
-				between(sales.date, startOfWeek, endOfWeek)
+				eq(sale.status, 'completed'),
+				between(sale.date, startOfWeek, endOfWeek)
 			)
 		)
 }

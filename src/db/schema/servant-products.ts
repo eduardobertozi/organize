@@ -1,17 +1,17 @@
 import { relations } from 'drizzle-orm'
 import { pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core'
-import { products } from './product'
-import { servants } from './servant'
+import { product } from './product'
+import { servant } from './servant'
 
 export const servantProducts = pgTable(
 	'servant_product',
 	{
 		servantId: uuid()
 			.notNull()
-			.references(() => servants.id),
+			.references(() => servant.id),
 		productId: uuid()
 			.notNull()
-			.references(() => products.id),
+			.references(() => product.id),
 	},
 	(t) => [primaryKey({ columns: [t.servantId, t.productId] })]
 )
@@ -19,13 +19,13 @@ export const servantProducts = pgTable(
 export const servantProductsRelations = relations(
 	servantProducts,
 	({ one }) => ({
-		product: one(products, {
+		product: one(product, {
 			fields: [servantProducts.productId],
-			references: [products.id],
+			references: [product.id],
 		}),
-		servant: one(servants, {
+		servant: one(servant, {
 			fields: [servantProducts.servantId],
-			references: [servants.id],
+			references: [servant.id],
 		}),
 	})
 )

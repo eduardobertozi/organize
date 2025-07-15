@@ -14,7 +14,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import type { FormAddSaleData } from './form-add-sale'
+import type { FormAddSaleData } from '@/schemas/add-sale-schema'
 
 type StatusFieldProps = {
 	isVisible?: boolean

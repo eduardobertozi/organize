@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from '@/db/database'
-import { sales } from '@/db/schema/sale'
+import { sale } from '@/db/schema/sale'
 import {
 	type FormAddSaleData,
 	formAddSaleSchema,
@@ -22,7 +22,7 @@ export async function createSale(data: FormAddSaleData) {
 	}
 
 	try {
-		await db.insert(sales).values(data)
+		await db.insert(sale).values(data)
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao criar venda')

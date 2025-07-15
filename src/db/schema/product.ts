@@ -1,11 +1,11 @@
 import { integer, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { suppliers } from './supplier'
+import { supplier } from './supplier'
 
-export const products = pgTable('product', {
+export const product = pgTable('product', {
 	id: uuid().primaryKey().defaultRandom(),
 	description: text().notNull(),
 	coast: integer().notNull(),
 	quantity: integer(),
 	updatedAt: timestamp().defaultNow().notNull(),
-	supplierId: uuid().references(() => suppliers.id),
+	supplierId: uuid().references(() => supplier.id),
 })

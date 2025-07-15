@@ -22,7 +22,7 @@ export async function createServant(data: FormAddServantData) {
 	}
 
 	try {
-		await db.insert(schema.servants).values(data)
+		await db.insert(schema.servant).values(data)
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao criar serviço')

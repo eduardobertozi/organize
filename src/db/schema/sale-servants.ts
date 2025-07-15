@@ -1,28 +1,28 @@
 import { relations } from 'drizzle-orm'
 import { pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core'
-import { sales } from './sale'
-import { servants } from './servant'
+import { sale } from './sale'
+import { servant } from './servant'
 
 export const saleServants = pgTable(
 	'sale_servants',
 	{
 		saleId: uuid()
 			.notNull()
-			.references(() => sales.id),
+			.references(() => sale.id),
 		servantId: uuid()
 			.notNull()
-			.references(() => servants.id),
+			.references(() => servant.id),
 	},
 	(t) => [primaryKey({ columns: [t.saleId, t.servantId] })]
 )
 
 export const saleServantsRelations = relations(saleServants, ({ one }) => ({
-	servant: one(servants, {
+	servant: one(servant, {
 		fields: [saleServants.servantId],
-		references: [servants.id],
+		references: [servant.id],
 	}),
-	sale: one(sales, {
+	sale: one(sale, {
 		fields: [saleServants.saleId],
-		references: [sales.id],
+		references: [sale.id],
 	}),
 }))

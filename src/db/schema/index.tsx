@@ -1,12 +1,12 @@
 import { account, session, user, verification } from './auth'
-import { clients } from './client'
-import { products } from './product'
-import { sales } from './sale'
+import { client } from './client'
+import { product } from './product'
+import { sale } from './sale'
 import { saleServants } from './sale-servants'
-import { servants } from './servant'
+import { servant } from './servant'
 import { servantProducts } from './servant-products'
 import { store } from './store'
-import { suppliers } from './supplier'
+import { supplier } from './supplier'
 
 export const schema = {
 	user,
@@ -14,11 +14,11 @@ export const schema = {
 	session,
 	verification,
 	store,
-	clients,
-	servants,
-	products,
-	suppliers,
-	sales,
+	client,
+	servant,
+	product,
+	supplier,
+	sale,
 	saleServants,
 	servantProducts,
 }

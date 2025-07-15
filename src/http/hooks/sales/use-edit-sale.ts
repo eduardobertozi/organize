@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import type { FormAddSaleData } from '@/app/[slug]/routes/sales/form-add-sale'
 import { useSheetToggle } from '@/components/ui/sheet'
+import type { FormAddSaleData } from '@/schemas/add-sale-schema'
 
 export const useEditSale = () => {
 	const queryClient = useQueryClient()

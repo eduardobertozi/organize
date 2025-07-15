@@ -17,21 +17,21 @@ export async function fetchSales({ search, page }: FetchSalesParams) {
 		throw new Error('Não autorizado')
 	}
 
-	const { clients, sales } = schema
+	const { client, sale } = schema
 
 	const data = await db
 		.select({
 			sale: {
-				...sales,
+				...sale,
 			},
-			name: clients.name,
+			name: client.name,
 		})
-		.from(sales)
-		.leftJoin(clients, eq(sales.clientId, clients.id))
-		.where(ilike(clients.name, `%${search}%`))
+		.from(sale)
+		.leftJoin(client, eq(sale.clientId, client.id))
+		.where(ilike(client.name, `%${search}%`))
 		.limit(10)
 		.offset((page - 1) * 10)
-		.orderBy(desc(sales.date))
+		.orderBy(desc(sale.date))
 
 	return data.map((raw) => ({
 		...raw.sale,

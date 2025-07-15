@@ -27,7 +27,7 @@ export async function updateServant(data: FormAddServantData, id: string) {
 	}
 
 	try {
-		await db.update(schema.servants).set(data).where(eq(schema.servants.id, id))
+		await db.update(schema.servant).set(data).where(eq(schema.servant.id, id))
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao atualizar serviço')

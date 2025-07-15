@@ -13,8 +13,8 @@ export async function fetchServants() {
 
 	const data = await db
 		.select()
-		.from(schema.servants)
-		.orderBy(schema.servants.description)
+		.from(schema.servant)
+		.orderBy(schema.servant.description)
 
 	return data
 }
