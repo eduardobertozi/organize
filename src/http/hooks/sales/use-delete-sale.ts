@@ -1,24 +1,23 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useSheetToggle } from '@/components/ui/sheet'
+import { deleteSale } from '@/http/actions/sales/delete-sale'
 
 export const useDeleteSale = () => {
 	const queryClient = useQueryClient()
 	const { toggle } = useSheetToggle()
 
-	const deleteSale = useMutation({
+	const response = useMutation({
 		mutationFn: async (saleId: string) => {
-			await new Promise((resolve) => setTimeout(resolve, 1000))
-			return saleId
+			await deleteSale(saleId)
 		},
-		onSuccess: (saleId) => {
-			console.log(`deleting ${saleId}`)
+		onSuccess: () => {
 			toggle()
 			toast.success('Venda excluída com sucesso')
 
-			queryClient.invalidateQueries({ queryKey: ['sales', 'sales-options'] })
+			queryClient.invalidateQueries({ queryKey: ['sales'] })
 		},
 	})
 
-	return deleteSale
+	return response
 }

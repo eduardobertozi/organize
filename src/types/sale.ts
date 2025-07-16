@@ -6,7 +6,7 @@ export type Sale = {
 	date: Date
 	status: SaleStatus
 	clientId: string
-	servantId: string[]
+	servants: string[]
 }
 
 export type SaleDetails = {

@@ -71,6 +71,13 @@
       "when": 1752640535123,
       "tag": "0009_apply_cascading_delete_to_mtm_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1752643043207,
+      "tag": "0010_apply_cascading_delete_to_sale",
+      "breakpoints": true
     }
   ]
 }

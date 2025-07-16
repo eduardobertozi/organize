@@ -15,7 +15,10 @@ export const sale = pgTable('sale', {
 	amount: integer().notNull(),
 	date: timestamp('date').notNull(),
 	status: saleStatus('status').notNull(),
-	clientId: uuid('client_id').references(() => client.id),
+	clientId: uuid('client_id').references(() => client.id, {
+		onUpdate: 'cascade',
+		onDelete: 'cascade',
+	}),
 	updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 

@@ -1,5 +1,6 @@
 'use server'
 
+import { eq } from 'drizzle-orm'
 import { db } from '@/db/database'
 import { schema } from '@/db/schema'
 import {
@@ -8,7 +9,11 @@ import {
 } from '@/schemas/add-sale-schema'
 import { getUser } from '../auth/get-user'
 
-export async function createSale(data: FormAddSaleData) {
+/**
+ * @param data - Dados da venda
+ * @param id - ID da venda
+ */
+export async function updateSale(data: FormAddSaleData, id: string) {
 	const user = await getUser()
 
 	if (!user) {
@@ -22,7 +27,16 @@ export async function createSale(data: FormAddSaleData) {
 	}
 
 	try {
-		const sale = await db.insert(schema.sale).values(data).returning()
+		const sale = await db
+			.update(schema.sale)
+			.set(data)
+			.where(eq(schema.sale.id, id))
+			.returning()
+
+		await db
+			.delete(schema.saleServants)
+			.where(eq(schema.saleServants.saleId, id))
+
 		await db.insert(schema.saleServants).values(
 			data.servants.map((servant) => ({
 				saleId: sale[0].id,
@@ -31,6 +45,6 @@ export async function createSale(data: FormAddSaleData) {
 		)
 	} catch (err) {
 		console.error(err)
-		throw new Error('Erro ao criar venda')
+		throw new Error('Erro ao atualizar serviço')
 	}
 }

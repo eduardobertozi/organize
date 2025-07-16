@@ -18,7 +18,7 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchProducts } from '@/http/hooks/products/use-fetch-products'
 import { useAddServant } from '@/http/hooks/servants/use-add-servant'
-import { useFetchServantProducts } from '@/http/hooks/servants/use-fetch-servants copy'
+import { useFetchServantProducts } from '@/http/hooks/servants/use-fetch-servant-products'
 import { resolver } from '@/lib/zod'
 import {
 	type FormAddServantData,

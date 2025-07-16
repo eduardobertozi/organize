@@ -1,32 +1,24 @@
 'use client'
 
-import { CheckIcon, DollarSignIcon } from 'lucide-react'
-import { useForm } from 'react-hook-form'
+import { CheckIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { DateSelector } from '@/components/ui/extensions/date-selector'
-import { InputIcon } from '@/components/ui/extensions/input-icon'
+import { InputCurrency } from '@/components/ui/extensions/input-currency'
 import { MultiSelector } from '@/components/ui/extensions/multi-selector'
 import { SelectItemDialog } from '@/components/ui/extensions/select-item-dialog'
 import {
 	Form,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useFetchClients } from '@/http/hooks/clients/use-fetch-clients'
-import { useAddSale } from '@/http/hooks/sales/use-add-sale'
-import { useFetchServants } from '@/http/hooks/servants/use-fetch-servants'
-import { resolver } from '@/lib/zod'
-import {
-	type FormAddSaleData,
-	formAddSaleSchema,
-} from '@/schemas/add-sale-schema'
 import type { Sale } from '@/types/sale'
-import { transformToOptions } from '@/utils/data-to-options'
 import { AddClient } from '../../clients/components/add-client'
+import { useFormAddSale } from './hooks/use-form-add-sale'
 import { StatusField } from './status-field'
 
 type FormAddSaleProps = {
@@ -34,41 +26,16 @@ type FormAddSaleProps = {
 }
 
 export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
-	const form = useForm<FormAddSaleData>({
-		defaultValues: {
-			amount: sale?.amount || 0,
-			clientId: sale?.clientId || '',
-			servantId: sale?.servantId || [],
-			date: sale?.date || new Date(),
-			status: sale?.status || 'pending',
-		},
-		resolver: resolver(formAddSaleSchema),
-	})
-
-	const isVisible = sale !== null
-
-	const clients = useFetchClients()
-	const clientsOptions = transformToOptions(clients.data ?? [], {
-		label: 'name',
-		value: 'id',
-	})
-
-	const servants = useFetchServants()
-	const servantsOptions = transformToOptions(servants.data ?? [], {
-		label: 'description',
-		value: 'id',
-	})
-
-	const addSale = useAddSale()
+	const vm = useFormAddSale({ sale })
 
 	return (
-		<Form {...form}>
+		<Form {...vm.form}>
 			<form
 				className="space-y-4"
-				onSubmit={form.handleSubmit((data) => addSale.mutateAsync(data))}
+				onSubmit={vm.form.handleSubmit((data) => vm.addSale.mutateAsync(data))}
 			>
 				<FormField
-					control={form.control}
+					control={vm.form.control}
 					name="clientId"
 					render={({ field }) => (
 						<FormItem>
@@ -76,7 +43,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 							<FormControl>
 								<SelectItemDialog
 									addNewItemElement={<AddClient />}
-									items={clientsOptions}
+									items={vm.clientsOptions}
 									onSelect={field.onChange}
 								/>
 							</FormControl>
@@ -85,18 +52,19 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 					)}
 				/>
 				<FormField
-					control={form.control}
-					name="servantId"
+					control={vm.form.control}
+					name="servants"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Serviço</FormLabel>
+							<FormLabel>Serviços Vinculados</FormLabel>
 							<FormControl>
 								<div>
-									{servants.isLoading ? (
+									{vm.isLoadingServants ? (
 										<Skeleton className="h-10 w-full" />
 									) : (
 										<MultiSelector
-											items={servantsOptions}
+											defaultValue={vm.defaultServants}
+											items={vm.servantsOptions}
 											onChangeValue={field.onChange}
 										/>
 									)}
@@ -107,7 +75,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 					)}
 				/>
 				<FormField
-					control={form.control}
+					control={vm.form.control}
 					name="date"
 					render={({ field }) => (
 						<FormItem>
@@ -123,37 +91,33 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 					)}
 				/>
 				<FormField
-					control={form.control}
+					control={vm.form.control}
 					name="amount"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Valor</FormLabel>
 							<FormControl>
-								<InputIcon
-									{...field}
-									icon={DollarSignIcon}
-									onChange={(e) => field.onChange(+e.target.value)}
-									side="left"
-									step="1"
-									type="number"
-								/>
+								<InputCurrency readOnly type="number" {...field} />
 							</FormControl>
+							<FormDescription>
+								Calculado automaticamente com base nos serviços selecionados
+							</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
-				<StatusField form={form} isVisible={isVisible} />
+				<StatusField form={vm.form} isVisible={vm.isVisible} />
 				<Button
 					className="mt-2 w-full bg-indigo-900 text-white transition hover:bg-indigo-800"
-					disabled={addSale.isSuccess || addSale.isPending}
+					disabled={vm.addSale.isSuccess || vm.addSale.isPending}
 					type="submit"
 				>
-					{addSale.isSuccess ? (
+					{vm.addSale.isSuccess ? (
 						<span className="flex items-center">
 							Salvo com sucesso <CheckIcon className="ml-2 h-4 w-4" />
 						</span>
 					) : (
-						<span>{addSale.isPending ? 'Salvando...' : 'Salvar'}</span>
+						<span>{vm.addSale.isPending ? 'Salvando...' : 'Salvar'}</span>
 					)}
 				</Button>
 			</form>
