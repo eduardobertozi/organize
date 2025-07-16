@@ -33,7 +33,7 @@ export const Option: React.FC<OptionProps> = ({
 	)
 }
 
-export const Main = () => {
+export const MainDashboard = () => {
 	const { data, isLoading } = useGetSalesCount()
 
 	return (
@@ -56,12 +56,15 @@ export const Main = () => {
 				</div>
 			)}
 			<div className="flex flex-col gap-4">
-				<Option className="bg-teal-800 hover:bg-teal-700" href="/sales">
+				<Option
+					className="bg-teal-800 hover:bg-teal-700"
+					href="/dashboard/sales"
+				>
 					Vendas
 				</Option>
-				<Option href="/clients">Clientes</Option>
-				<Option href="/products">Produtos</Option>
-				<Option href="/servants">Serviços</Option>
+				<Option href="/dashboard/clients">Clientes</Option>
+				<Option href="/dashboard/products">Produtos</Option>
+				<Option href="/dashboard/servants">Serviços</Option>
 			</div>
 		</div>
 	)
