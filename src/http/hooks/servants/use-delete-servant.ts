@@ -1,26 +1,25 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useSheetToggle } from '@/components/ui/sheet'
+import { deleteServant } from '@/http/actions/servants/delete-servant'
 
 export const useDeleteServant = () => {
 	const queryClient = useQueryClient()
 	const { toggle } = useSheetToggle()
 
-	const deleteServant = useMutation({
+	const response = useMutation({
 		mutationFn: async (servantId: string) => {
-			await new Promise((resolve) => setTimeout(resolve, 1000))
-			return servantId
+			await deleteServant(servantId)
 		},
-		onSuccess: (servantId) => {
-			console.log(`deleting ${servantId}`)
+		onSuccess: () => {
 			toggle()
 			toast.success('Serviço excluído com sucesso')
 
 			queryClient.invalidateQueries({
-				queryKey: ['servants', 'servants-options'],
+				queryKey: ['servants'],
 			})
 		},
 	})
 
-	return deleteServant
+	return response
 }

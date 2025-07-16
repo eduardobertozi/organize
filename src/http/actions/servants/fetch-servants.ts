@@ -11,10 +11,10 @@ export async function fetchServants() {
 		throw new Error('Não autorizado')
 	}
 
-	const data = await db
+	const servants = await db
 		.select()
 		.from(schema.servant)
 		.orderBy(schema.servant.description)
 
-	return data
+	return servants
 }

@@ -28,7 +28,6 @@ const NotFoundContent = () => {
 	)
 }
 
-// biome-ignore lint/suspicious/noShadowRestrictedNames: nextjs file convention
 export default function NotFound() {
-	return <PageTemplate content={<NotFoundContent />} horizontalLogo title="" />
+	return <PageTemplate content={NotFoundContent} horizontalLogo title="" />
 }

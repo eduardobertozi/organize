@@ -1,4 +1,3 @@
-import type { JSX } from 'react'
 import { Header } from '../header'
 import { LogoHorizontal } from '../logo'
 import {
@@ -13,14 +12,14 @@ type PageTemplateProps = {
 	title: string
 	description?: string
 	horizontalLogo?: boolean
-	content: JSX.Element
+	content: React.ElementType
 }
 
 export const PageTemplate: React.FC<PageTemplateProps> = ({
 	title,
 	description,
 	horizontalLogo = false,
-	content,
+	content: Content,
 }) => {
 	return (
 		<div className="flex min-h-[100svh] w-full items-center justify-center px-6 py-2">
@@ -33,7 +32,9 @@ export const PageTemplate: React.FC<PageTemplateProps> = ({
 					<CardTitle className="text-2xl">{title}</CardTitle>
 					<CardDescription>{description ?? ''}</CardDescription>
 				</CardHeader>
-				<CardContent className="p-0">{content}</CardContent>
+				<CardContent className="p-0">
+					<Content />
+				</CardContent>
 			</Card>
 		</div>
 	)

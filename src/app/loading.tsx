@@ -20,10 +20,6 @@ const LoadingContent = () => {
 
 export default function Loading() {
 	return (
-		<PageTemplate
-			content={<LoadingContent />}
-			horizontalLogo
-			title="Carregando"
-		/>
+		<PageTemplate content={LoadingContent} horizontalLogo title="Carregando" />
 	)
 }

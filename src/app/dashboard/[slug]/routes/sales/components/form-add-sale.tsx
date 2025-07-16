@@ -1,6 +1,5 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon, DollarSignIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
@@ -20,6 +19,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchClients } from '@/http/hooks/clients/use-fetch-clients'
 import { useAddSale } from '@/http/hooks/sales/use-add-sale'
 import { useFetchServants } from '@/http/hooks/servants/use-fetch-servants'
+import { resolver } from '@/lib/zod'
 import {
 	type FormAddSaleData,
 	formAddSaleSchema,
@@ -42,7 +42,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 			date: sale?.date || new Date(),
 			status: sale?.status || 'pending',
 		},
-		resolver: zodResolver(formAddSaleSchema),
+		resolver: resolver(formAddSaleSchema),
 	})
 
 	const isVisible = sale !== null

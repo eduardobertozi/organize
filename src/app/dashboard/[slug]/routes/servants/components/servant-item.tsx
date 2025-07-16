@@ -1,5 +1,6 @@
 import { DollarSignIcon } from 'lucide-react'
 import type { Servant } from '@/types/servant'
+import { currency } from '@/utils/currency'
 import { EditServant } from './edit-servant'
 
 type SaleItemProps = {
@@ -14,7 +15,7 @@ export const ServantItem: React.FC<SaleItemProps> = ({ servant }) => {
 					<span className="mt-2 truncate">{servant.description}</span>
 					<div className="flex items-center gap-2">
 						<DollarSignIcon className="text-emerald-600" size={18} />
-						<span>R$: {servant.value.toFixed(2)}</span>
+						<span>{currency(servant.value)}</span>
 					</div>
 				</div>
 			</div>

@@ -1,8 +1,8 @@
-import { z } from 'zod/v3'
+import { z } from 'zod'
 import { realToCents } from '@/utils/currency'
 
 /**
- * @param message - Mensagem de erro
+ * @param error - Mensagem de erro
  * @returns Schema de moeda com valor em centavos
  * @example
  * const schema = currencySchema('Defina um valor para o produto')
@@ -10,7 +10,8 @@ import { realToCents } from '@/utils/currency'
  * console.log(data) // { coast: 10000 }
  * objetivo: guardar o valor em centavos para evitar problemas com números decimais
  */
-export const currencySchema = (message: string) =>
+export const currencySchema = (error: string) =>
 	z.coerce
-		.number({ required_error: message })
+		.number({ error })
+		.transform((value) => value ?? 0)
 		.transform((value) => realToCents(value))

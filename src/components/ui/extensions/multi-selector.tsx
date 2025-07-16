@@ -5,14 +5,16 @@ import MultipleSelector, { type Option } from '@/components/ui/multiselect'
 
 type MultiSelectorProps = {
 	items?: Option[]
+	defaultValue?: Option[]
 	onChangeValue: (value: string[]) => void
 }
 
 export const MultiSelector: React.FC<MultiSelectorProps> = ({
 	items,
+	defaultValue,
 	onChangeValue,
 }) => {
-	const [value, setValue] = useState<Option[]>()
+	const [value, setValue] = useState<Option[]>(defaultValue ?? [])
 
 	useEffect(() => {
 		onChangeValue(value?.map((item) => item.value) ?? [])

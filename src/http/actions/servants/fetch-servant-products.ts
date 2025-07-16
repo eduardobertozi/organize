@@ -5,10 +5,7 @@ import { db } from '@/db/database'
 import { schema } from '@/db/schema'
 import { getUser } from '../auth/get-user'
 
-/**
- * @param id - Id do serviço
- */
-export async function deleteServant(id: string) {
+export async function fetchServantProducts(servantId: string) {
 	const user = await getUser()
 
 	if (!user) {
@@ -16,9 +13,14 @@ export async function deleteServant(id: string) {
 	}
 
 	try {
-		await db.delete(schema.servant).where(eq(schema.servant.id, id))
+		const servantProducts = await db
+			.select()
+			.from(schema.servantProducts)
+			.where(eq(schema.servantProducts.servantId, servantId))
+
+		return servantProducts
 	} catch (err) {
 		console.error(err)
-		throw new Error('Erro ao deletar serviço')
+		throw new Error('Erro ao buscar produtos vinculados ao serviço')
 	}
 }

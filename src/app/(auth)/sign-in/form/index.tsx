@@ -1,6 +1,5 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { LoaderCircleIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
@@ -17,10 +16,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signIn } from '@/http/actions/auth/sign-in-email-and-password'
-import {
-	type SignInParams,
-	signInParamsSchema,
-} from '../../../../schemas/sign-in-schema'
+import { resolver } from '@/lib/zod'
+import { type SignInParams, signInParamsSchema } from '@/schemas/sign-in-schema'
 
 export const SignInForm = () => {
 	const { replace } = useRouter()
@@ -31,7 +28,7 @@ export const SignInForm = () => {
 			username: '',
 			password: '',
 		},
-		resolver: zodResolver(signInParamsSchema),
+		resolver: resolver(signInParamsSchema),
 	})
 
 	const formWithError =

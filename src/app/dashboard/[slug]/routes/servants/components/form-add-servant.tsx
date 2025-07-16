@@ -1,14 +1,14 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { CheckIcon, DollarSignIcon } from 'lucide-react'
+import { CheckIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import { InputIcon } from '@/components/ui/extensions/input-icon'
+import { InputCurrency } from '@/components/ui/extensions/input-currency'
 import { MultiSelector } from '@/components/ui/extensions/multi-selector'
 import {
 	Form,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -18,6 +18,8 @@ import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchProducts } from '@/http/hooks/products/use-fetch-products'
 import { useAddServant } from '@/http/hooks/servants/use-add-servant'
+import { useFetchServantProducts } from '@/http/hooks/servants/use-fetch-servants copy'
+import { resolver } from '@/lib/zod'
 import {
 	type FormAddServantData,
 	formAddServantSchema,
@@ -29,27 +31,32 @@ type FormAddServantProps = {
 	servant?: Servant | null
 }
 
-/* TODO: Adicionar produtos ao serviço */
-
 export const FormAddServant: React.FC<FormAddServantProps> = ({
 	servant = null,
 }) => {
 	const form = useForm<FormAddServantData>({
 		defaultValues: {
-			description: servant?.description || '',
-			value: servant?.value || 0,
-			products: [], //servant?.products || [],
+			description: servant ? servant.description : '',
+			value: servant ? servant.value / 100 : 0,
+			products: [],
 		},
-		resolver: zodResolver(formAddServantSchema),
+		resolver: resolver(formAddServantSchema),
 	})
-	const products = useFetchProducts()
 
+	const products = useFetchProducts()
 	const productsOptions = transformToOptions(products.data ?? [], {
 		label: 'description',
 		value: 'id',
 	})
 
-	const addServant = useAddServant()
+	const servantProducts = useFetchServantProducts(servant?.id ?? '')
+	const defaultProducts = productsOptions.filter((product) =>
+		servantProducts.data?.some(
+			(servantProduct) => servantProduct.productId === product.value
+		)
+	)
+
+	const addServant = useAddServant(servant?.id)
 
 	return (
 		<Form {...form}>
@@ -82,6 +89,7 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 										<Skeleton className="h-10 w-full" />
 									) : (
 										<MultiSelector
+											defaultValue={defaultProducts}
 											items={productsOptions}
 											onChangeValue={field.onChange}
 										/>
@@ -99,15 +107,11 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 						<FormItem>
 							<FormLabel>Valor</FormLabel>
 							<FormControl>
-								<InputIcon
-									{...field}
-									icon={DollarSignIcon}
-									onChange={(e) => field.onChange(+e.target.value)}
-									side="left"
-									step="1"
-									type="number"
-								/>
+								<InputCurrency type="number" {...field} />
 							</FormControl>
+							<FormDescription>
+								Use 0 e vírgula para separar centavos, por ex: 0,50 = R$ 0,50
+							</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}

@@ -1,6 +1,5 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { LoaderCircleIcon } from 'lucide-react'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
@@ -17,10 +16,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { signUp } from '@/http/actions/auth/sign-up-email-and-password'
-import {
-	type SignUpParams,
-	signUpParamsSchema,
-} from '../../../../schemas/sign-up-schema'
+import { resolver } from '@/lib/zod'
+import { type SignUpParams, signUpParamsSchema } from '@/schemas/sign-up-schema'
 
 export const SignUpForm = () => {
 	const [loading, startTransition] = useTransition()
@@ -31,7 +28,7 @@ export const SignUpForm = () => {
 			password: '',
 			name: '',
 		},
-		resolver: zodResolver(signUpParamsSchema),
+		resolver: resolver(signUpParamsSchema),
 	})
 
 	function handleSubmit(data: SignUpParams) {

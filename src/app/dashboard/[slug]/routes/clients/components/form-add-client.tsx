@@ -1,6 +1,5 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon } from 'lucide-react'
 import { useId } from 'react'
 import { useForm } from 'react-hook-form'
@@ -15,6 +14,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAddClient } from '@/http/hooks/clients/use-add-client'
+import { resolver } from '@/lib/zod'
 import {
 	type FormAddClientData,
 	formAddClientSchema,
@@ -33,7 +33,7 @@ export const FormAddClient: React.FC<FormAddClientProps> = ({
 			name: client?.name || '',
 			whatsapp: client?.whatsapp || '479',
 		},
-		resolver: zodResolver(formAddClientSchema),
+		resolver: resolver(formAddClientSchema),
 	})
 
 	const addClient = useAddClient()

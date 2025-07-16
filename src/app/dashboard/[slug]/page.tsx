@@ -5,9 +5,9 @@ import { Sales } from './routes/sales'
 import { Servants } from './routes/servants'
 
 const component = {
-	sales: <PageTemplate content={<Sales />} title="Vendas" />,
-	servants: <PageTemplate content={<Servants />} title="Serviços" />,
-	products: <PageTemplate content={<Products />} title="Produtos" />,
+	sales: <PageTemplate content={Sales} title="Vendas" />,
+	servants: <PageTemplate content={Servants} title="Serviços" />,
+	products: <PageTemplate content={Products} title="Produtos" />,
 }
 
 type PrivateRoutesProps = {

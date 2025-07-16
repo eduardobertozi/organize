@@ -1,6 +1,5 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
@@ -16,6 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAddProduct } from '@/http/hooks/products/use-add-product'
+import { resolver } from '@/lib/zod'
 import {
 	type FormAddProductData,
 	formAddProductSchema,
@@ -35,7 +35,7 @@ export const FormAddProduct: React.FC<FormAddProductProps> = ({
 			coast: product ? product.coast / 100 : 0,
 			quantity: product?.quantity || 0,
 		},
-		resolver: zodResolver(formAddProductSchema),
+		resolver: resolver(formAddProductSchema),
 	})
 	const addProduct = useAddProduct(product?.id)
 

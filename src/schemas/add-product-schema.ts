@@ -1,4 +1,4 @@
-import { z } from 'zod/v3'
+import { z } from 'zod'
 import { currencySchema } from './currency-schema'
 
 export const formAddProductSchema = z.object({

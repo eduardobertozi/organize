@@ -29,7 +29,5 @@ const UnauthorizedContent = () => {
 }
 
 export default function Unauthorized() {
-	return (
-		<PageTemplate content={<UnauthorizedContent />} horizontalLogo title="" />
-	)
+	return <PageTemplate content={UnauthorizedContent} horizontalLogo title="" />
 }

@@ -1,8 +1,6 @@
 'use client'
 
-import { SearchIcon } from 'lucide-react'
 import { toast } from 'sonner'
-import { InputIcon } from '@/components/ui/extensions/input-icon'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useFetchServants } from '@/http/hooks/servants/use-fetch-servants'
 import { AddServant } from './components/add-servant'
@@ -17,7 +15,6 @@ export const Servants: React.FC<unknown> = () => {
 
 	return (
 		<div className="space-y-2">
-			<InputIcon className="h-11" icon={SearchIcon} placeholder="Pesquisar" />
 			<AddServant />
 
 			<div className="pt-4">

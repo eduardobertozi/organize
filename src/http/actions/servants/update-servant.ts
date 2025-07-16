@@ -1,4 +1,4 @@
-'use sever'
+'use server'
 
 import { eq } from 'drizzle-orm'
 import { db } from '@/db/database'
@@ -27,7 +27,22 @@ export async function updateServant(data: FormAddServantData, id: string) {
 	}
 
 	try {
-		await db.update(schema.servant).set(data).where(eq(schema.servant.id, id))
+		const servant = await db
+			.update(schema.servant)
+			.set(data)
+			.where(eq(schema.servant.id, id))
+			.returning()
+
+		await db
+			.delete(schema.servantProducts)
+			.where(eq(schema.servantProducts.servantId, id))
+
+		await db.insert(schema.servantProducts).values(
+			data.products.map((product) => ({
+				servantId: servant[0].id,
+				productId: product,
+			}))
+		)
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao atualizar serviço')

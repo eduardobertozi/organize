@@ -1,4 +1,4 @@
-'use sever'
+'use server'
 
 import { db } from '@/db/database'
 import { schema } from '@/db/schema'
@@ -22,7 +22,13 @@ export async function createServant(data: FormAddServantData) {
 	}
 
 	try {
-		await db.insert(schema.servant).values(data)
+		const servant = await db.insert(schema.servant).values(data).returning()
+		await db.insert(schema.servantProducts).values(
+			data.products.map((product) => ({
+				servantId: servant[0].id,
+				productId: product,
+			}))
+		)
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao criar serviço')
