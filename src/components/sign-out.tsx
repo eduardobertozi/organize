@@ -13,8 +13,13 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { signOut } from '@/http/actions/auth/sign-out'
+import type { User } from '@/types/user'
 
-export default function SignOutButton() {
+type SignOutButtonProps = {
+	user: User
+}
+
+export const SignOutButton: React.FC<SignOutButtonProps> = ({ user }) => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	return (
@@ -42,10 +47,10 @@ export default function SignOutButton() {
 			<DropdownMenuContent className="max-w-64">
 				<DropdownMenuLabel className="flex min-w-0 flex-col">
 					<span className="truncate font-medium text-foreground text-sm">
-						Nome do usuário - Loja
+						{user.name}
 					</span>
 					<span className="truncate font-normal text-muted-foreground text-xs">
-						email@email.com
+						{user.email}
 					</span>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />

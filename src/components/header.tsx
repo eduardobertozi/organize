@@ -1,23 +1,24 @@
 import { HomeIcon } from 'lucide-react'
 import Link from 'next/link'
+import { getUser } from '@/http/actions/auth/get-user'
 import { Logo } from './logo'
-import SignOut from './sign-out'
+import { SignOutButton } from './sign-out'
 
-type HeaderProps = {
-	isLogged?: boolean
-}
+export const Header = async () => {
+	const session = await getUser()
 
-export const Header: React.FC<HeaderProps> = ({ isLogged = false }) => {
 	return (
 		<header className="fixed top-0 z-10 flex w-full items-center justify-between border-b bg-background/80 px-6 py-2 backdrop-blur-md">
-			{isLogged && <SignOut />}
-			{isLogged && (
+			{session ? <SignOutButton user={session.user} /> : <div />}
+			{session ? (
 				<Link
-					className="flex cursor-pointer items-center gap-1 text-sm"
+					className="flex cursor-pointer items-center gap-1 rounded-sm px-2 py-1 text-sm transition-colors hover:bg-accent"
 					href="/dashboard"
 				>
 					<HomeIcon size={24} /> Home
 				</Link>
+			) : (
+				<div />
 			)}
 			<Logo className="size-10 shadow-md" />
 		</header>

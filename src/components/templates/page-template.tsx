@@ -24,7 +24,7 @@ export const PageTemplate: React.FC<PageTemplateProps> = ({
 }) => {
 	return (
 		<div className="flex min-h-[100svh] w-full items-center justify-center px-6 py-2">
-			<Header isLogged />
+			<Header />
 			<Card className="w-full border-none bg-transparent pt-10 md:max-w-sm">
 				<CardHeader className="px-0">
 					{horizontalLogo && (

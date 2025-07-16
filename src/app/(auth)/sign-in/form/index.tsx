@@ -81,7 +81,10 @@ export const SignInForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button className="w-full bg-indigo-900 text-foreground" type="submit">
+				<Button
+					className="mt-4 w-full bg-indigo-900 text-foreground hover:bg-indigo-800"
+					type="submit"
+				>
 					{loading ? (
 						<LoaderCircleIcon className="animate-spin" size={24} />
 					) : (
