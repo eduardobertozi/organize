@@ -64,6 +64,13 @@
       "when": 1752529240572,
       "tag": "0008_create_sale_servants_relation",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1752640535123,
+      "tag": "0009_apply_cascading_delete_to_mtm_tables",
+      "breakpoints": true
     }
   ]
 }

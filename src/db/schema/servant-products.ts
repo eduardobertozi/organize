@@ -8,10 +8,16 @@ export const servantProducts = pgTable(
 	{
 		servantId: uuid('servant_id')
 			.notNull()
-			.references(() => servant.id),
+			.references(() => servant.id, {
+				onDelete: 'cascade',
+				onUpdate: 'cascade',
+			}),
 		productId: uuid('product_id')
 			.notNull()
-			.references(() => product.id),
+			.references(() => product.id, {
+				onDelete: 'cascade',
+				onUpdate: 'cascade',
+			}),
 	},
 	(t) => [primaryKey({ columns: [t.servantId, t.productId] })]
 )
