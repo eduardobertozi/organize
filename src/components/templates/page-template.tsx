@@ -12,7 +12,7 @@ type PageTemplateProps = {
 	title: string
 	description?: string
 	horizontalLogo?: boolean
-	content: React.ElementType
+	content: React.ElementType<unknown>
 }
 
 export const PageTemplate: React.FC<PageTemplateProps> = ({
