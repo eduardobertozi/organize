@@ -56,6 +56,8 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 		)
 	)
 
+	const isLoadingOptions = products.isLoading || servantProducts.isLoading
+
 	const addServant = useAddServant(servant?.id)
 
 	return (
@@ -85,7 +87,7 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 							<FormLabel>Productos</FormLabel>
 							<FormControl>
 								<div>
-									{products.isLoading ? (
+									{isLoadingOptions ? (
 										<Skeleton className="h-10 w-full" />
 									) : (
 										<MultiSelector
