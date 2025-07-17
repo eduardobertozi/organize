@@ -2,6 +2,7 @@
 
 import { RefreshCcwIcon, Undo2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { LogoHorizontal } from '@/components/logo'
 import { Button } from '@/components/ui/button'
 import {
 	Card,
@@ -23,6 +24,7 @@ export default function ErrorPage({ reset }: ErrorProps) {
 		<div className="flex h-screen w-full items-center justify-center px-6 py-2">
 			<Card>
 				<CardHeader>
+					<LogoHorizontal className="mx-auto mb-8 w-full sm:w-40" />
 					<CardTitle>Ops, algo deu errado</CardTitle>
 					<CardDescription>
 						Tente novamente ou entre em contato com o suporte
