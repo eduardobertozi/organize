@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { useDebounce } from '@/components/ui/multiselect'
 import { fetchSales } from '@/http/actions/sales/fetch-sales'
 import { useGlobalStore } from '@/store/global'
@@ -71,6 +72,10 @@ export const useFetchSales = () => {
 		queryFn: () => fetchSales(params),
 		enabled: !!debouncedSearch || !!page,
 	})
+
+	if (sales.error) {
+		toast.error('Erro ao buscar vendas')
+	}
 
 	return sales
 }

@@ -1,37 +1,42 @@
 'use client'
 
-import { SearchIcon } from 'lucide-react'
-import { toast } from 'sonner'
-import { InputIcon } from '@/components/ui/extensions/input-icon'
+import { InputSearch } from '@/components/input-search'
+import { Paginate } from '@/components/ui/paginate'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { usePagination } from '@/hooks/use-pagination'
 import { useFetchProducts } from '@/http/hooks/products/use-fetch-products'
+import type { Product } from '@/types/product'
 import { AddProduct } from './components/add-product'
 import { ProductItem } from './components/product-item'
 
-export const Products = () => {
-	const { data, error, isPending } = useFetchProducts()
+export const PageSkeleton = () => {
+	return (
+		<div>
+			{Array.from({ length: 3 }, (_, index) => (
+				<div
+					className="h-14 w-full animate-pulse border-b bg-accent/20"
+					key={`${index}-${Date.now()}`}
+				/>
+			))}
+		</div>
+	)
+}
 
-	if (error) {
-		toast.error('Erro ao buscar produtos')
-	}
+export const Products = () => {
+	const { data, isPending } = useFetchProducts()
+	usePagination<Product>({ data: data ?? [] })
 
 	return (
 		<div className="space-y-2">
-			<InputIcon className="h-11" icon={SearchIcon} placeholder="Pesquisar" />
+			<InputSearch />
 			<AddProduct />
 
 			<div className="pt-4">
 				{isPending ? (
-					<div>
-						{Array.from({ length: 3 }, (_, index) => (
-							<div
-								className="h-14 w-full animate-pulse border-b bg-accent/20"
-								key={`${index}-${Date.now()}`}
-							/>
-						))}
-					</div>
+					<PageSkeleton />
 				) : (
 					<div className="space-y-8 text-sm">
+						<Paginate />
 						<div className="grid grid-cols-1 gap-2">
 							<ScrollArea className="max-h-[300px]">
 								{data?.map((product) => (

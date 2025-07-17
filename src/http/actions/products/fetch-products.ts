@@ -1,10 +1,16 @@
 'use server'
 
+import { ilike } from 'drizzle-orm'
 import { db } from '@/db/database'
 import { schema } from '@/db/schema'
 import { getUser } from '../auth/get-user'
 
-export async function fetchProducts() {
+type FetchProductsParams = {
+	search: string
+	page: number
+}
+
+export async function fetchProducts({ search, page }: FetchProductsParams) {
 	const user = await getUser()
 
 	if (!user) {
@@ -15,6 +21,9 @@ export async function fetchProducts() {
 		const data = await db
 			.select()
 			.from(schema.product)
+			.where(ilike(schema.product.description, `%${search}%`))
+			.limit(10)
+			.offset((page - 1) * 10)
 			.orderBy(schema.product.description)
 
 		return data

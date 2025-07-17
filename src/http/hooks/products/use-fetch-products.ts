@@ -1,35 +1,28 @@
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import { useDebounce } from '@/components/ui/multiselect'
 import { fetchProducts } from '@/http/actions/products/fetch-products'
-
-// const productsList: Product[] = [
-// 	{
-// 		id: uuid(),
-// 		description: 'Lâmina',
-// 		supplierId: uuid(),
-// 		quantity: 1000,
-// 		coast: 0.5,
-// 	},
-// 	{
-// 		id: uuid(),
-// 		description: 'Gola Higiênica',
-// 		supplierId: uuid(),
-// 		quantity: 1000,
-// 		coast: 1.0,
-// 	},
-// ]
-
-// async function fetchProducts() {
-// 	return await new Promise<Product[]>((resolve) => {
-// 		setTimeout(() => resolve(productsList), 300)
-// 	})
-// }
+import { useGlobalStore } from '@/store/global'
 
 export const useFetchProducts = () => {
+	const search = useGlobalStore((state) => state.search)
+	const debouncedSearch = useDebounce(search, 500)
+	const page = useGlobalStore((state) => state.currentPage)
+
+	const params = {
+		search: debouncedSearch,
+		page,
+	}
+
 	const products = useQuery({
-		queryKey: ['products'],
-		queryFn: () => fetchProducts(),
-		staleTime: 1000 * 60 * 5,
+		queryKey: ['products', params],
+		queryFn: () => fetchProducts(params),
+		enabled: !!debouncedSearch || !!page,
 	})
+
+	if (products.error) {
+		toast.error('Erro ao buscar produtos')
+	}
 
 	return products
 }
