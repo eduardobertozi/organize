@@ -17,6 +17,8 @@ type FormAddSaleParams = {
 }
 
 export const useFormAddSale = ({ sale }: FormAddSaleParams) => {
+	const addSale = useAddSale(sale?.id)
+
 	const form = useForm<FormAddSaleData>({
 		defaultValues: {
 			amount: sale ? sale.amount / 100 : 0,
@@ -43,11 +45,12 @@ export const useFormAddSale = ({ sale }: FormAddSaleParams) => {
 	})
 
 	const saleServants = useFetchSaleServants(sale?.id ?? '')
-	const defaultServants = servantsOptions.filter((servant) =>
-		saleServants.data?.some(
-			(saleServant) => saleServant.servantId === servant.value
-		)
-	)
+	const defaultServants =
+		servantsOptions.filter((servant) =>
+			saleServants.data?.some(
+				(saleServant) => saleServant.servantId === servant.value
+			)
+		) ?? []
 	const isLoadingServants = servants.isLoading || saleServants.isLoading
 
 	const servantsData = useMemo(() => servants.data ?? [], [servants.data])
@@ -66,8 +69,6 @@ export const useFormAddSale = ({ sale }: FormAddSaleParams) => {
 			form.setValue('amount', total / 100)
 		}
 	}, [selectedServantIds, servantsData, form.setValue])
-
-	const addSale = useAddSale(sale?.id)
 
 	return {
 		form,

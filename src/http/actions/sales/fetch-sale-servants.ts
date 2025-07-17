@@ -12,6 +12,10 @@ export async function fetchSaleServants(saleId: string) {
 		throw new Error('Não autorizado')
 	}
 
+	if (!saleId) {
+		return []
+	}
+
 	try {
 		const saleServants = await db
 			.select()

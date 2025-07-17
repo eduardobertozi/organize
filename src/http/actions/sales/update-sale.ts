@@ -29,7 +29,11 @@ export async function updateSale(data: FormAddSaleData, id: string) {
 	try {
 		const sale = await db
 			.update(schema.sale)
-			.set(data)
+			.set({
+				amount: data.amount * 100,
+				date: data.date,
+				status: data.status,
+			})
 			.where(eq(schema.sale.id, id))
 			.returning()
 

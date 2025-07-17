@@ -100,7 +100,7 @@ export const FormAddSale: React.FC<FormAddSaleProps> = ({ sale = null }) => {
 								<InputCurrency readOnly type="number" {...field} />
 							</FormControl>
 							<FormDescription>
-								Calculado automaticamente com base nos serviços selecionados
+								Calculado automaticamente a partir dos serviços
 							</FormDescription>
 							<FormMessage />
 						</FormItem>

@@ -22,7 +22,15 @@ export async function createSale(data: FormAddSaleData) {
 	}
 
 	try {
-		const sale = await db.insert(schema.sale).values(data).returning()
+		const sale = await db
+			.insert(schema.sale)
+			.values({
+				amount: data.amount,
+				date: data.date,
+				status: data.status,
+				clientId: data.clientId,
+			})
+			.returning()
 		await db.insert(schema.saleServants).values(
 			data.servants.map((servant) => ({
 				saleId: sale[0].id,
