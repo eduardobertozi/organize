@@ -1,6 +1,6 @@
 'use server'
 
-import { and, between, count, eq } from 'drizzle-orm'
+import { and, between, count, eq, sum } from 'drizzle-orm'
 import { db } from '@/db/database'
 import { sale } from '@/db/schema/sale'
 import { dayjs } from '@/lib/dayjs'
@@ -18,6 +18,7 @@ export async function getSalesCount() {
 
 	return await db
 		.select({
+			value: sum(sale.amount),
 			count: count(),
 		})
 		.from(sale)

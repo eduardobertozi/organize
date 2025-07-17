@@ -1,5 +1,6 @@
 'use client'
 
+import { SaleStatus } from '@/app/dashboard/_components/sale-status'
 import { InputSearch } from '@/components/input-search'
 import { Paginate } from '@/components/ui/paginate'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -28,7 +29,8 @@ export const Sales: React.FC<unknown> = () => {
 						))}
 					</div>
 				) : (
-					<div className="space-y-8 text-sm">
+					<div className="space-y-4 text-sm">
+						<SaleStatus />
 						<Paginate />
 						<div className="grid grid-cols-1 gap-2">
 							<ScrollArea className="max-h-[300px]">
