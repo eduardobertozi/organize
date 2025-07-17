@@ -43,7 +43,7 @@ export const MainDashboard = () => {
 				>
 					Vendas
 				</Option>
-				<Option href="/dashboard/clients">Clientes</Option>
+				{/* <Option href="/dashboard/clients">Clientes</Option> */}
 				<Option href="/dashboard/products">Produtos</Option>
 				<Option href="/dashboard/servants">Serviços</Option>
 			</div>
