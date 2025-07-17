@@ -5,14 +5,10 @@ export type Sale = {
 	amount: number
 	date: Date
 	status: SaleStatus
-	clientId: string
-	servants: string[]
+	clientId: string | null
+	servants?: string[]
 }
 
-export type SaleDetails = {
-	id: string
+export type SaleDetails = Sale & {
 	name: string
-	date: Date
-	status: SaleStatus
-	amount: number
 }

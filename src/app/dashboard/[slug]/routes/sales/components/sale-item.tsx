@@ -1,6 +1,5 @@
 import { Badge } from '@/components/ui/badge'
 import { dayjs } from '@/lib/dayjs'
-import { uuid } from '@/lib/uuid'
 import type { SaleDetails } from '@/types/sale'
 import { EditSale } from './edit-sale'
 
@@ -36,8 +35,8 @@ function setBadgeDetails(status: string) {
 export const SaleItem: React.FC<SaleItemProps> = ({ sale }) => {
 	const saleObject = {
 		id: sale.id,
-		clientId: uuid(),
-		servantId: [uuid()],
+		clientId: sale.clientId,
+		servants: sale.servants,
 		amount: sale.amount,
 		date: sale.date,
 		status: sale.status,
