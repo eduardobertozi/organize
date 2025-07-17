@@ -30,7 +30,7 @@ export async function updateSale(data: FormAddSaleData, id: string) {
 		const sale = await db
 			.update(schema.sale)
 			.set({
-				amount: data.amount * 100,
+				amount: data.amount,
 				date: data.date,
 				status: data.status,
 			})
