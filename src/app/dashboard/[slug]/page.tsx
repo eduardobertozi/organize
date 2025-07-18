@@ -1,16 +1,5 @@
 import { redirect } from 'next/navigation'
-import { Clients } from '@/components/routes/clients'
-import { Products } from '@/components/routes/products'
-import { Sales } from '@/components/routes/sales'
-import { Servants } from '@/components/routes/servants'
-import { PageTemplate } from '@/components/templates/page-template'
-
-const component = {
-	sales: <PageTemplate content={Sales} title="Vendas" />,
-	servants: <PageTemplate content={Servants} title="Serviços" />,
-	products: <PageTemplate content={Products} title="Produtos" />,
-	clients: <PageTemplate content={Clients} title="Clientes" />,
-}
+import { privateRoutes } from '@/components/routes'
 
 type PrivateRoutesProps = {
 	params: Promise<{
@@ -25,5 +14,5 @@ export default async function PrivateRoutes({ params }: PrivateRoutesProps) {
 		return redirect('/dashboard')
 	}
 
-	return component[slug as keyof typeof component]
+	return privateRoutes[slug as keyof typeof privateRoutes]
 }
