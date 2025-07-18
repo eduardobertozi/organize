@@ -4,6 +4,7 @@ import { CheckIcon } from 'lucide-react'
 import { useId } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
+import { InputMask } from '@/components/ui/extensions/input-mask'
 import {
 	Form,
 	FormControl,
@@ -36,7 +37,7 @@ export const FormAddClient: React.FC<FormAddClientProps> = ({
 		resolver: resolver(formAddClientSchema),
 	})
 
-	const addClient = useAddClient()
+	const addClient = useAddClient(client?.id)
 
 	return (
 		<Form {...form}>
@@ -65,7 +66,7 @@ export const FormAddClient: React.FC<FormAddClientProps> = ({
 						<FormItem>
 							<FormLabel>Whatsapp / Celular</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<InputMask {...field} mask="(00) 00000-0000" unmask={true} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

@@ -12,7 +12,7 @@ export const AddClient = () => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button className="h-10 w-auto bg-indigo-900 text-white hover:bg-indigo-800">
+				<Button className="h-10 w-full bg-indigo-900 text-white hover:bg-indigo-800">
 					Novo
 				</Button>
 			</SheetTrigger>

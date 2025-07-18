@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { useDebounce } from '@/components/ui/multiselect'
+import { usePagination } from '@/hooks/use-pagination'
 import { fetchClients } from '@/http/actions/clients/fetch-clients'
 import { useGlobalStore } from '@/store/global'
 
@@ -51,13 +53,24 @@ import { useGlobalStore } from '@/store/global'
 export const useFetchClients = () => {
 	const search = useGlobalStore((state) => state.search)
 	const debouncedSearch = useDebounce(search, 500)
+	const page = useGlobalStore((state) => state.currentPage)
 
-	const clients = useQuery({
-		queryKey: ['clients', debouncedSearch],
-		queryFn: () => fetchClients(debouncedSearch),
-		enabled: !!debouncedSearch,
-		staleTime: 1000 * 60 * 1,
+	const params = {
+		search: debouncedSearch,
+		page,
+	}
+
+	const response = useQuery({
+		queryKey: ['clients', params],
+		queryFn: () => fetchClients(params),
+		enabled: !!debouncedSearch || !!page,
 	})
 
-	return clients
+	if (response.error) {
+		toast.error('Erro ao buscar clientes')
+	}
+
+	usePagination({ total: response.data?.total ?? 1 })
+
+	return response
 }

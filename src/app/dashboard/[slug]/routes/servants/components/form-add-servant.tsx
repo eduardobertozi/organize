@@ -52,7 +52,7 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 	})
 
 	const products = useFetchProducts()
-	const productsOptions = transformToOptions(products.data ?? [], {
+	const productsOptions = transformToOptions(products.data?.products ?? [], {
 		label: 'description',
 		value: 'id',
 	})

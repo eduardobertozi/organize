@@ -1,27 +1,37 @@
 'use server'
 
-import { ilike } from 'drizzle-orm'
+import { desc, ilike } from 'drizzle-orm'
 import { db } from '@/db/database'
+import { schema } from '@/db/schema'
 import { client } from '@/db/schema/client'
 import { getUser } from '../auth/get-user'
 
-export async function fetchClients(search: string) {
+type FetchClientsParams = {
+	search: string
+	page: number
+}
+
+export async function fetchClients({ search, page }: FetchClientsParams) {
 	const user = await getUser()
 
 	if (!user) {
 		throw new Error('Não autorizado')
 	}
 
-	if (search.length === 0) {
-		return []
-	}
-
 	try {
-		const data = await db
+		const total = await db.$count(schema.client)
+		const clients = await db
 			.select()
 			.from(client)
-			.where(ilike(client.name, `%${search}%`))
-		return data
+			.where(ilike(schema.client.name, `%${search}%`))
+			.limit(10)
+			.offset((page - 1) * 10)
+			.orderBy(desc(schema.client.name))
+
+		return {
+			clients,
+			total,
+		}
 	} catch (err) {
 		console.error(err)
 		throw new Error('Erro ao buscar clientes')

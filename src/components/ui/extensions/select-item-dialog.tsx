@@ -74,7 +74,7 @@ export const SelectItemDialog: React.FC<SelectItemDialogProps> = ({
 							placeholder="Pesquisar..."
 							value={search}
 						/>
-						{addNewItemElement}
+						<div className="w-24">{addNewItemElement}</div>
 					</header>
 					{items.map((item) => (
 						<button
