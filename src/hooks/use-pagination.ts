@@ -3,14 +3,14 @@
 import { useEffect } from 'react'
 import { useGlobalStore } from '@/store/global'
 
-type UsePaginationProps<T> = {
-	data: T[]
+type UsePaginationProps = {
+	total: number
 }
 
-export const usePagination = <T>({ data }: UsePaginationProps<T>) => {
+export const usePagination = ({ total }: UsePaginationProps) => {
 	const setTotalPages = useGlobalStore((state) => state.setTotalPages)
 
 	useEffect(() => {
-		setTotalPages(Math.ceil(data.length / 10))
-	}, [data, setTotalPages])
+		setTotalPages(Math.ceil(total / 10))
+	}, [total, setTotalPages])
 }

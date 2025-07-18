@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useDebounce } from '@/components/ui/multiselect'
+import { usePagination } from '@/hooks/use-pagination'
 import { fetchProducts } from '@/http/actions/products/fetch-products'
 import { useGlobalStore } from '@/store/global'
 
@@ -23,6 +24,8 @@ export const useFetchProducts = () => {
 	if (products.error) {
 		toast.error('Erro ao buscar produtos')
 	}
+
+	usePagination({ total: products.data?.total ?? 1 })
 
 	return products
 }

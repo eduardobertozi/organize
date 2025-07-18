@@ -18,6 +18,7 @@ export async function fetchSales({ search, page }: FetchSalesParams) {
 	}
 
 	const { client, sale } = schema
+	const total = await db.$count(sale)
 
 	const data = await db
 		.select({
@@ -33,8 +34,11 @@ export async function fetchSales({ search, page }: FetchSalesParams) {
 		.offset((page - 1) * 10)
 		.orderBy(desc(sale.date))
 
-	return data.map((raw) => ({
-		...raw.sale,
-		name: `	${raw.name}`,
-	}))
+	return {
+		sales: data.map((raw) => ({
+			...raw.sale,
+			name: `	${raw.name}`,
+		})),
+		total,
+	}
 }
