@@ -11,13 +11,13 @@ type FetchSalesParams = {
 }
 
 export async function fetchSales({ search, page }: FetchSalesParams) {
-	const user = await getUser()
+	const session = await getUser()
 
-	if (!user) {
+	if (!session) {
 		throw new Error('Não autorizado')
 	}
 
-	const { client, sale } = schema
+	const { client, sale, user } = schema
 	const total = await db.$count(sale)
 
 	const data = await db
@@ -26,9 +26,11 @@ export async function fetchSales({ search, page }: FetchSalesParams) {
 				...sale,
 			},
 			name: client.name,
+			seller: user.name,
 		})
 		.from(sale)
 		.leftJoin(client, eq(sale.clientId, client.id))
+		.leftJoin(user, eq(sale.sellerId, user.id))
 		.where(ilike(client.name, `%${search}%`))
 		.limit(10)
 		.offset((page - 1) * 10)
@@ -37,7 +39,8 @@ export async function fetchSales({ search, page }: FetchSalesParams) {
 	return {
 		sales: data.map((raw) => ({
 			...raw.sale,
-			name: `	${raw.name}`,
+			name: raw.name,
+			seller: raw.seller,
 		})),
 		total,
 	}

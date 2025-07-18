@@ -92,6 +92,13 @@
       "when": 1752805722830,
       "tag": "0012_rename_field_time_to_duration_servants",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1752808613313,
+      "tag": "0013_include_sellerId_to_sale",
+      "breakpoints": true
     }
   ]
 }

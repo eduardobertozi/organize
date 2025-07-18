@@ -6,9 +6,11 @@ export type Sale = {
 	date: Date
 	status: SaleStatus
 	clientId: string | null
+	sellerId: string | null
 	servants?: string[]
 }
 
 export type SaleDetails = Sale & {
 	name: string
+	seller: string
 }

@@ -9,9 +9,9 @@ import {
 import { getUser } from '../auth/get-user'
 
 export async function createSale(data: FormAddSaleData) {
-	const user = await getUser()
+	const session = await getUser()
 
-	if (!user) {
+	if (!session) {
 		throw new Error('Não autorizado')
 	}
 
@@ -29,6 +29,7 @@ export async function createSale(data: FormAddSaleData) {
 				date: data.date,
 				status: data.status,
 				clientId: data.clientId,
+				sellerId: session.user.id,
 			})
 			.returning()
 		await db.insert(schema.saleServants).values(

@@ -33,26 +33,26 @@ function setBadgeDetails(status: string) {
 }
 
 export const SaleItem: React.FC<SaleItemProps> = ({ sale }) => {
-	const saleObject = {
-		id: sale.id,
-		clientId: sale.clientId,
-		servants: sale.servants,
-		amount: sale.amount,
-		date: sale.date,
-		status: sale.status,
-	}
-
 	const { background, label } = setBadgeDetails(sale.status)
 
 	return (
-		<EditSale sale={saleObject}>
+		<EditSale sale={sale}>
 			<div className="flex w-full items-center justify-between">
-				<div className="flex w-full cursor-pointer flex-col gap-2 border-b bg-accent/20 px-2 py-4 text-sm transition duration-300 ease-in-out hover:bg-accent/50">
-					<div className="flex w-full items-center justify-between gap-2">
-						<span>{dayjs(sale.date).format('DD/MM/YYYY')}</span>
+				<div className="flex w-full cursor-pointer flex-col gap-4 border-b bg-accent/20 p-4 text-sm transition duration-300 ease-in-out hover:bg-accent/50">
+					<div className="flex w-full items-center justify-between">
 						<Badge className={background}>{label}</Badge>
+						<span>{dayjs(sale.date).format('DD/MM/YYYY')}</span>
 					</div>
-					<span className="mt-2 truncate">{sale.name}</span>
+					<div className="flex items-center justify-between">
+						<div>
+							<p className="text-muted-foreground">Cliente: </p>
+							<p className="truncate">{sale.name}</p>
+						</div>
+						<div>
+							<p className="text-end text-muted-foreground">Atendido por: </p>
+							<p className="truncate">{sale.seller}</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</EditSale>
