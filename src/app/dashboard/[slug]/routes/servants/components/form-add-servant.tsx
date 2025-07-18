@@ -8,19 +8,26 @@ import { MultiSelector } from '@/components/ui/extensions/multi-selector'
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchProducts } from '@/http/hooks/products/use-fetch-products'
 import { useAddServant } from '@/http/hooks/servants/use-add-servant'
 import { useFetchServantProducts } from '@/http/hooks/servants/use-fetch-servant-products'
 import { resolver } from '@/lib/zod'
 import {
+	durationOptions,
 	type FormAddServantData,
 	formAddServantSchema,
 } from '@/schemas/add-servant-schema'
@@ -38,6 +45,7 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 		defaultValues: {
 			description: servant ? servant.description : '',
 			value: servant ? servant.value / 100 : 0,
+			duration: servant ? servant.duration : 30,
 			products: [],
 		},
 		resolver: resolver(formAddServantSchema),
@@ -111,9 +119,36 @@ export const FormAddServant: React.FC<FormAddServantProps> = ({
 							<FormControl>
 								<InputCurrency type="number" {...field} />
 							</FormControl>
-							<FormDescription>
-								Use 0 e vírgula para separar centavos, por ex: 0,50 = R$ 0,50
-							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="duration"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Duração (minutos)</FormLabel>
+							<FormControl>
+								<Select
+									onValueChange={field.onChange}
+									value={field.value.toString()}
+								>
+									<SelectTrigger className="w-full">
+										<SelectValue placeholder="Escolha" />
+									</SelectTrigger>
+									<SelectContent>
+										{durationOptions.map((time, index) => (
+											<SelectItem
+												key={`${index}-${Date.now()}`}
+												value={time.toString()}
+											>
+												{time} minutos
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}

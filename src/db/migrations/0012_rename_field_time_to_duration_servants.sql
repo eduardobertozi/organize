@@ -1,0 +1,1 @@
+ALTER TABLE "servant" RENAME COLUMN "time" TO "duration";

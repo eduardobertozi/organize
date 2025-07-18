@@ -78,6 +78,20 @@
       "when": 1752643043207,
       "tag": "0010_apply_cascading_delete_to_sale",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1752805228146,
+      "tag": "0011_add_time_field_servants",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1752805722830,
+      "tag": "0012_rename_field_time_to_duration_servants",
+      "breakpoints": true
     }
   ]
 }

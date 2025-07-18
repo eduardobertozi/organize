@@ -6,6 +6,7 @@ export const servant = pgTable('servant', {
 	id: uuid().primaryKey().defaultRandom(),
 	description: text().notNull(),
 	value: integer().notNull(),
+	duration: integer().notNull(),
 	updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 

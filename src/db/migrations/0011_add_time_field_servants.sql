@@ -1,0 +1,1 @@
+ALTER TABLE "servant" ADD COLUMN "time" integer NOT NULL;

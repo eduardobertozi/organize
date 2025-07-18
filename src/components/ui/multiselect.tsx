@@ -415,10 +415,7 @@ const MultipleSelector = ({
 		<Command
 			ref={dropdownRef}
 			{...commandProps}
-			className={cn(
-				'h-10 overflow-visible bg-transparent',
-				commandProps?.className
-			)}
+			className={cn('overflow-visible bg-transparent', commandProps?.className)}
 			filter={commandFilter()}
 			onKeyDown={(e) => {
 				handleKeyDown(e)
@@ -450,7 +447,7 @@ const MultipleSelector = ({
 						return (
 							<div
 								className={cn(
-									'relative inline-flex h-7 animate-fadeIn cursor-default items-center rounded-md border bg-background ps-2 pe-7 pl-2 font-medium text-secondary-foreground text-xs transition-all hover:bg-background disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-fixed:pe-2',
+									'relative inline-flex py-1 animate-fadeIn cursor-default items-center rounded-sm bg-indigo-900 ps-2 pe-7 font-medium text-secondary-foreground text-xs transition-all hover:bg-indigo-800 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-fixed:pe-2',
 									badgeClassName
 								)}
 								data-disabled={disabled || undefined}
