@@ -1,6 +1,7 @@
 'use client'
 
 import { toast } from 'sonner'
+import { PageSkeleton } from '@/app/dashboard/_components/page-skeleton'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useFetchServants } from '@/http/hooks/servants/use-fetch-servants'
 import { AddServant } from './components/add-servant'
@@ -19,14 +20,7 @@ export const Servants: React.FC<unknown> = () => {
 
 			<div className="pt-4">
 				{isPending ? (
-					<div>
-						{Array.from({ length: 3 }, (_, index) => (
-							<div
-								className="h-14 w-full animate-pulse border-b bg-accent/20"
-								key={`${index}-${Date.now()}`}
-							/>
-						))}
-					</div>
+					<PageSkeleton />
 				) : (
 					<div className="space-y-8 text-sm">
 						<div className="grid grid-cols-1 gap-2">

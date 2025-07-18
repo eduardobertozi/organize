@@ -1,5 +1,6 @@
 'use client'
 
+import { PageSkeleton } from '@/app/dashboard/_components/page-skeleton'
 import { SaleStatus } from '@/app/dashboard/_components/sale-status'
 import { InputSearch } from '@/components/input-search'
 import { Paginate } from '@/components/ui/paginate'
@@ -18,14 +19,7 @@ export const Sales = () => {
 
 			<div className="pt-4">
 				{isPending ? (
-					<div>
-						{Array.from({ length: 3 }, (_, index) => (
-							<div
-								className="h-14 w-full animate-pulse border-b bg-accent/20"
-								key={`${index}-${Date.now()}`}
-							/>
-						))}
-					</div>
+					<PageSkeleton />
 				) : (
 					<div className="space-y-4 text-sm">
 						<SaleStatus />

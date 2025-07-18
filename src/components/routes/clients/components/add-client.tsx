@@ -6,13 +6,13 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
-import { FormAddProduct } from '../components/form-add-product'
+import { FormAddClient } from './form-add-client'
 
-export const AddProduct = () => {
+export const AddClient = () => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button className="h-11 w-full bg-indigo-900 text-white hover:bg-indigo-800">
+				<Button className="h-10 w-full bg-indigo-900 text-white hover:bg-indigo-800">
 					Novo
 				</Button>
 			</SheetTrigger>
@@ -21,10 +21,10 @@ export const AddProduct = () => {
 				side="bottom"
 			>
 				<SheetHeader className="px-0">
-					<SheetTitle>Novo Produto</SheetTitle>
+					<SheetTitle>Novo Cliente</SheetTitle>
 				</SheetHeader>
 				<div className="space-y-4">
-					<FormAddProduct />
+					<FormAddClient />
 				</div>
 			</SheetContent>
 		</Sheet>

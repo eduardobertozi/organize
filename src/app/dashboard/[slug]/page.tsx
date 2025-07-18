@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation'
+import { Clients } from '@/components/routes/clients'
+import { Products } from '@/components/routes/products'
+import { Sales } from '@/components/routes/sales'
+import { Servants } from '@/components/routes/servants'
 import { PageTemplate } from '@/components/templates/page-template'
-import { Clients } from './routes/clients'
-import { Products } from './routes/products'
-import { Sales } from './routes/sales'
-import { Servants } from './routes/servants'
 
 const component = {
 	sales: <PageTemplate content={Sales} title="Vendas" />,

@@ -10,27 +10,27 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
-import { useDeleteClient } from '@/http/hooks/clients/use-delete-client'
-import type { Client } from '@/types/client'
-import { FormAddClient } from '../components/form-add-client'
+import { useDeleteServant } from '@/http/hooks/servants/use-delete-servant'
+import type { Servant } from '@/types/servant'
+import { FormAddServant } from './form-add-servant'
 
-type EditClientProps = {
-	client?: Client | null
+type EditServantProps = {
+	servant?: Servant | null
 	children: React.ReactNode
 }
 
-export const EditClient: React.FC<EditClientProps> = ({
-	client = null,
+export const EditServant: React.FC<EditServantProps> = ({
+	servant = null,
 	children,
 }) => {
-	const deleteClient = useDeleteClient()
+	const deleteServant = useDeleteServant()
 
-	async function handleDeleteClient() {
-		if (!client) {
+	async function handleDeleteServant() {
+		if (!servant) {
 			return
 		}
 
-		await deleteClient.mutateAsync(client.id)
+		await deleteServant.mutateAsync(servant.id)
 	}
 
 	return (
@@ -41,21 +41,21 @@ export const EditClient: React.FC<EditClientProps> = ({
 				side="bottom"
 			>
 				<SheetHeader className="px-0">
-					<SheetTitle>Editar Cliente</SheetTitle>
+					<SheetTitle>Editar Serviço</SheetTitle>
 					<SheetClose asChild>
 						<Button
 							className="text-destructive/50 hover:text-destructive"
-							disabled={deleteClient.isPending}
-							onClick={handleDeleteClient}
+							disabled={deleteServant.isPending}
+							onClick={handleDeleteServant}
 							type="button"
 							variant="outline"
 						>
-							Excluir Cliente <TrashIcon size={16} />
+							Excluir Serviço <TrashIcon size={16} />
 						</Button>
 					</SheetClose>
 				</SheetHeader>
 				<div className="space-y-4">
-					<FormAddClient client={client} />
+					<FormAddServant servant={servant} />
 				</div>
 			</SheetContent>
 		</Sheet>
