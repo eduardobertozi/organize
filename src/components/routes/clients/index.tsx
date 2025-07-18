@@ -1,10 +1,10 @@
 'use client'
 
+import { PageSkeleton } from '@/app/dashboard/_components/page-skeleton'
 import { InputSearch } from '@/components/input-search'
 import { Paginate } from '@/components/ui/paginate'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useFetchClients } from '@/http/hooks/clients/use-fetch-clients'
-import { PageSkeleton } from '../products'
 import { AddClient } from './components/add-client'
 import { ClientItem } from './components/client-item'
 
