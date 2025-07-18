@@ -11,6 +11,6 @@ export type Sale = {
 }
 
 export type SaleDetails = Sale & {
-	name: string
-	seller: string
+	name: string | null
+	seller: string | null
 }

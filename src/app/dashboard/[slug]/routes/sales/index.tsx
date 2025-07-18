@@ -8,7 +8,7 @@ import { useFetchSales } from '@/http/hooks/sales/use-fetch-sales'
 import { AddSale } from './components/add-sale'
 import { SaleItem } from './components/sale-item'
 
-export const Sales: React.FC<unknown> = () => {
+export const Sales = () => {
 	const { data, isPending } = useFetchSales()
 
 	return (

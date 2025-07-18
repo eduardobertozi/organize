@@ -33,7 +33,7 @@ export const useFormAddSale = ({ sale }: FormAddSaleParams) => {
 	const isVisible = sale !== null
 
 	const clients = useFetchClients()
-	const clientsOptions = transformToOptions(clients.data ?? [], {
+	const clientsOptions = transformToOptions(clients.data?.clients ?? [], {
 		label: 'name',
 		value: 'id',
 	})
